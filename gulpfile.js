@@ -6,12 +6,6 @@ const browserSync = require("browser-sync").create();
 const reload = browserSync.reload;
 
 
-gulp.task("browser-sync", () => {
-	browserSync.init({
-		server: "."
-	})
-});
-
 gulp.task("styles", () => {
 	return gulp.src("./dev/styles/**/*.scss")
 		.pipe(sass().on("error", sass.logError))
@@ -23,7 +17,7 @@ gulp.task("styles", () => {
 
 
 gulp.task("scripts", () => {
-	return gulp.src("./dev/scripts/main.js")
+	return gulp.src("./dev/scripts/script.js")
 	.pipe(babel({
 		presets: ["es2015"]
 	}))
@@ -33,9 +27,17 @@ gulp.task("scripts", () => {
 
 gulp.task("watch", () => {
 	gulp.watch("./dev/styles/**/*.scss", ["styles"]);
-	gulp.watch(".dev/scripts/main.js", ["scripts"]);
+	gulp.watch(".dev/scripts/script.js", ["scripts"]);
 	gulp.watch('*.html', reload);
 
+});
+
+gulp.task("browser-sync", () => {
+	browserSync.init({
+		server: {
+			baseDir: "./"
+		}
+	})
 });
 
 gulp.task("default", ["browser-sync", "styles", "scripts", "watch"]);
