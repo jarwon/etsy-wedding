@@ -11,31 +11,35 @@
 
 const etsyApp = {};
 
+//global variables
 etsyApp.key = "wdcbm8dnlafybh8oonqlw3xr";
+etsyApp.lat = 0;
+etsyApp.lon = 0;
 
+//initializes app
 etsyApp.init = function() {
-	etsyApp.getWeddingCategory();
-	etsyApp.getLocalListings();
-}
-
-etsyApp.getWeddingCategory = function() {
-	$.ajax({
-		url: "http://proxy.hackeryou.com",
-		method: "GET",
-		dataType: "json",
-		data: {
-			reqUrl: "https://openapi.etsy.com/v2/categories/weddings",
-			params: {
-				api_key: etsyApp.key
-			},
-			xmlToJSON: false
-		}
-	}).then(function(res) {
-		res = res.results[0];
-		console.log(res);
-	});
+	etsyApp.userGPS();
+	// etsyApp.getLocalListings();
 };
 
+//place user location using GPS in a variable etsyApp.userGPS
+etsyApp.userGPS = function() {
+	navigator.geolocation.getCurrentPosition(function(userPosition){
+		//calling the function listed below
+		etsyApp.userLocation(userPosition);
+	});
+}
+
+//get user location based on navigator GPS and storing the lon and lat in global variables to be used later
+etsyApp.userLocation = function(userPosition){
+		console.log(userPosition);
+	etsyApp.lat = userPosition.coords.latitude;
+	etsyApp.lon = userPosition.coords.longitude;
+	console.log(etsyApp.lat, etsyApp.lon);
+	etsyApp.getLocalListings();
+};
+
+//getting listings using user GPS location
 etsyApp.getLocalListings = function() {
 	$.ajax({
 		url: "http://proxy.hackeryou.com",
@@ -46,7 +50,11 @@ etsyApp.getLocalListings = function() {
 			params: {
 				api_key: etsyApp.key,
 				category: "weddings",
-				location: "Toronto"
+				// location: "toronto",
+				lat: etsyApp.lat,
+				lon: etsyApp.lon,
+				// sort_on: "price"
+				// page: 2
 			},
 			xmlToJSON: false
 		}
@@ -54,6 +62,27 @@ etsyApp.getLocalListings = function() {
 		console.log(res);
 	});
 }
+
+
+
+		// $.ajax ({
+		// 	url: 'http://proxy.hackeryou.com',
+		// 	method: "GET",
+		// 	dataType: "json",
+		// 	data: {
+		// 		reqUrl: `https://maps.googleapis.com/maps/api/place/autocomplete/json`,
+		// 		params: {
+		// 			types: "(cities)",
+		// 			key: "AIzaSyCCRXx-ZdsU3noOG85WmlHlNyxMkCXP3vk",
+		// 			input: "",
+		// 			language: "en",
+		// 		} //params closing
+		// 	} //data closing
+		// }).then(function(res){
+		// 	console.log(res);
+		// })
+
+
 
 
 $(function() {
