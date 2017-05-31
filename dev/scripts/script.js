@@ -1,39 +1,28 @@
 const etsyApp = {};
 
-// etsyApp.init = function() {
-// 	$.ajax({
-// 		url: "https://openapi.etsy.com/v2/listings/active?api_key=wdcbm8dnlafybh8oonqlw3xr",
-// 		method: "GET",
-// 		dataType: "json",
-// 		category: "weddings"
-// 	})
-// 	.then(function(data) {
-// 		console.log(data);
-// 	})
-// }
-
 etsyApp.init = function() {
-	$.ajax({
-		url: "https://openapi.etsy.com/v2/listings/active?api_key=wdcbm8dnlafybh8oonqlw3xr&category=weddings",
-		method: "GET",
-		dataType: "json",
-	})
-	.then(function(data) {
-		console.log(data);
-	})
+	etsyApp.getApiData();
 }
 
+etsyApp.getApiData = function() {
+	$.ajax({
+		url: "http://proxy.hackeryou.com",
+		method: "GET",
+		dataType: "json",
+		data: {
+			reqUrl: "https://openapi.etsy.com/v2/listings/active",
+			params: {
+				api_key: "wdcbm8dnlafybh8oonqlw3xr",
+				category: "weddings",
+				location: "Toronto"
+			},
+			xmlToJSON: false
+		}
+	}).then(function(res) {
+		console.log(res);
+	});
+};
 
-console.log("is this working");
-
-
-
-
-
-
-
-
-
-$(function(){
+$(function() {
 	etsyApp.init();
 });
