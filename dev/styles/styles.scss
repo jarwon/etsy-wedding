@@ -1,3 +1,15 @@
+@import "partials/setup";
+@import "partials/variables";
+@import "partials/mixins";
+
 body {
-	background-color: green;
+	background-color: $purple;
+}
+
+h1 {
+	@include headingFont(40px, $grey);
+}
+
+p {
+	@include bodyFont(16px, $black);
 }

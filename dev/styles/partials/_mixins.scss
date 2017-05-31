@@ -1,0 +1,13 @@
+// FONTS
+@mixin headingFont($fontSize, $fontColor) {
+	font-family: "Georgia", serif;
+	font-style: italic;
+	font-size: $fontSize;
+	color: $fontColor;
+}
+
+@mixin bodyFont($fontSize, $fontColor) {
+	font-family: 'Lato', sans-serif;
+	font-size: $fontSize;
+	color: $fontColor;
+}
