@@ -2,14 +2,153 @@
 @import "partials/variables";
 @import "partials/mixins";
 
+
+.wrapper {
+	width: 1280px;
+	margin: 0 auto;
+}
+
 body {
-	background-color: $purple;
+	background-color: #fff;
 }
 
 h1 {
-	@include headingFont(40px, $grey);
+	@include headingFont(72px, $grey);
+	text-align: center;
+	background-color: $pink;
+	display: inline-block;
+	padding: 10px;
 }
 
 p {
 	@include bodyFont(16px, $black);
 }
+
+a {
+	text-decoration: none;
+	color: $grey;
+	text-transform: uppercase;
+}
+
+h2 {
+	@include headingFont(26px, $black);
+	background-color: transparent;
+	text-align: center;
+	display: block;
+	width: 100%;
+	letter-spacing: 1px;
+}
+
+form {
+	margin: 50px 0;
+	font-style: italic;
+	width: 100%;
+}
+
+label {
+	text-transform: lowercase;
+	font-style: italic;
+}
+
+input[type=text], input[type=number] {
+	font-family: "Lato", sans-serif;
+	background-color: $pink;
+	color: $grey;
+	outline: none;
+	border: none;
+	padding: 10px 20px;
+	margin-right: 10px;
+}
+
+input[type=submit] {
+	background-color: $grey;
+	border: none;
+	padding: 10px 20px;
+	text-transform: uppercase;
+	color: #fff;
+}
+
+section.home {
+	padding-top: calc(50vh - 150px);
+	margin: 0 auto;
+	height: 100vh;
+	display: block;
+	text-align: center;
+	width: 50%;
+}
+
+section.categories {
+	margin-top: 100px;
+	padding: 0 130px;
+	h1 {
+		@include headingFont(30px, $grey);
+		text-align: center;
+		background-color: $pink;
+		padding: 10px;
+		margin: 40px 0 40px 40px;
+	}
+	.squareCategory {
+		height: 250px;
+		width: 250px;
+		float: left;
+		margin: 40px;
+		position: relative;
+		.overlay {
+			height: 75px;
+			background: linear-gradient(to bottom, #fff, $purple);
+			opacity: 0.7;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			p {
+				@include bodyFont(14px, $grey)
+				text-align: center;
+				text-transform: uppercase;
+				margin-top: 25px;
+			}
+		}
+	}
+}
+
+
+
+section.category {
+	h2 {
+		color: #fff;
+	}
+	aside {
+		padding: 30px;
+		width: 30%;
+		background-color: $purple;
+		ul {
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+			display: inline-block;
+			width: 100%;
+			li {
+				margin: 10px;
+				font-size: 14px;
+			}
+		}
+		.price {
+			p:first-of-type {
+				display: block;
+				margin: 5px 0;
+			}
+			p {
+				display: inline-block;
+				margin: 0 10px;
+			}
+			input[type=number] {
+				width: 50px;
+				padding: 5px;
+				font-size: 12px;
+				margin-left: 5px;
+			}
+		}
+	}
+}
+
+
