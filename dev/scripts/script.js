@@ -1,6 +1,4 @@
 // pseudocode:
-// Landing page: user types in their location (city) into the input field (additional option if there's time: use a geolocation api to get their location)
-// On form submit, get the value of the user's location input and store that in a variable 
 // After user inputs their location, show different wedding product categories and have the user select which category of wedding products they want to look at - store that in a category variable
 // Plug in the location variable and category variable to the ajax request to get listings of wedding products from etsy in their location
 // Display those listings to the page & subcategories list to allow them to further narrow down product listings if they wish
@@ -11,36 +9,44 @@
 
 const etsyApp = {};
 
-//global variables
+//global variables 
 etsyApp.key = "wdcbm8dnlafybh8oonqlw3xr";
-etsyApp.lat = 0;
-etsyApp.lon = 0;
 
 //initializes app
 etsyApp.init = function() {
-	etsyApp.userGPS();
-	// etsyApp.getLocalListings();
+	etsyApp.getLocation();
 };
 
-//place user location using GPS in a variable etsyApp.userGPS
-etsyApp.userGPS = function() {
-	navigator.geolocation.getCurrentPosition(function(userPosition){
-		//calling the function listed below
-		etsyApp.userLocation(userPosition);
-	});
-}
 
-//get user location based on navigator GPS and storing the lon and lat in global variables to be used later
+// Landing page: Get user's location either by device's navigator geolocation if access allowed OR from user's location text input if they deny access to navigator geolocation
+etsyApp.getLocation = function() {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(userPosition) {
+		// If user allows access to navigator geolocation, then run ajax request using their longitude & latitude coordinates
+			console.log("location access allowed");
+			etsyApp.userLocation(userPosition);
+		}, function(error) {
+		// If user denies access to geolocation, then run ajax request using their location text input
+			console.log("location access denied");
+			etsyApp.getUserInput();
+		});
+	};
+};
+
+
+// Get user's location via navigator geolocation (longitude & latitude coordinates)
 etsyApp.userLocation = function(userPosition){
-		console.log(userPosition);
-	etsyApp.lat = userPosition.coords.latitude;
-	etsyApp.lon = userPosition.coords.longitude;
-	console.log(etsyApp.lat, etsyApp.lon);
-	etsyApp.getLocalListings();
+	console.log(userPosition);
+	var lat = userPosition.coords.latitude;
+	var lon = userPosition.coords.longitude;
+	console.log(lat, lon);
+	
+	// Run ajax request function only after you have the user's location
+	etsyApp.getLocalListingsWithGPS(lat, lon);
 };
 
-//getting listings using user GPS location
-etsyApp.getLocalListings = function() {
+// Get etsy listings using user's geolocation
+etsyApp.getLocalListingsWithGPS = function(lat, lon) {
 	$.ajax({
 		url: "http://proxy.hackeryou.com",
 		method: "GET",
@@ -50,9 +56,8 @@ etsyApp.getLocalListings = function() {
 			params: {
 				api_key: etsyApp.key,
 				category: "weddings",
-				// location: "toronto",
-				lat: etsyApp.lat,
-				lon: etsyApp.lon,
+				lat: lat,
+				lon: lon
 				// sort_on: "price"
 				// page: 2
 			},
@@ -61,28 +66,56 @@ etsyApp.getLocalListings = function() {
 	}).then(function(res) {
 		console.log(res);
 	});
+};
+
+
+// Get user's location from text input field (city name - can be more specific if they wish, e.g. "Sydney, Australia"; just "Sydney" gives listings from Sydney, Nova Scotia)
+etsyApp.getUserInput = function() {
+	$("form").on("submit", function(e) {
+		e.preventDefault();
+
+		var userInputLocation = $("input[id='location']").val();
+		$("input[id='location']").val("");
+		console.log(userInputLocation);
+
+		// Run ajax request function only after you have the user's location
+		etsyApp.getLocalListingsWithLocationInput(userInputLocation);
+	});
+};
+
+// Get etsy listings using text location input
+etsyApp.getLocalListingsWithLocationInput = function(userInputLocation) {
+	$.ajax({
+		url: "http://proxy.hackeryou.com",
+		method: "GET",
+		dataType: "json",
+		data: {
+			reqUrl: "https://openapi.etsy.com/v2/listings/active",
+			params: {
+				api_key: etsyApp.key,
+				category: "weddings",
+				location: userInputLocation
+				// sort_on: "price"
+				// page: 2
+			},
+			xmlToJSON: false
+		}
+	}).then(function(res) {
+		console.log(res);
+	});
+};
+
+
+
+
+// Get values of user's price range to narrow down listings
+etsyApp.getPriceRange = function() {
+	// input id's TBD/changed based on HTML
+	var priceMin = $("input[id='priceMin']").val();
+	var priceMax = $("input[id='priceMax']").val();
+
+	// Pass price range values to ajax to narrow down listings
 }
-
-
-
-		// $.ajax ({
-		// 	url: 'http://proxy.hackeryou.com',
-		// 	method: "GET",
-		// 	dataType: "json",
-		// 	data: {
-		// 		reqUrl: `https://maps.googleapis.com/maps/api/place/autocomplete/json`,
-		// 		params: {
-		// 			types: "(cities)",
-		// 			key: "AIzaSyCCRXx-ZdsU3noOG85WmlHlNyxMkCXP3vk",
-		// 			input: "",
-		// 			language: "en",
-		// 		} //params closing
-		// 	} //data closing
-		// }).then(function(res){
-		// 	console.log(res);
-		// })
-
-
 
 
 $(function() {
