@@ -41,7 +41,6 @@ etsyApp.userLocation = function(userPosition){
 	var lon = userPosition.coords.longitude;
 	var userInputLocation = null;
 	console.log(lat, lon);
-	// console.log(typeof userPosition.coords.heading);
 
 	// Run ajax request function only after you have the user's location
 	etsyApp.getLocalListings(lat, lon, userInputLocation);
