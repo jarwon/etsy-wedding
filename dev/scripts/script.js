@@ -39,34 +39,12 @@ etsyApp.userLocation = function(userPosition){
 	console.log(userPosition);
 	var lat = userPosition.coords.latitude;
 	var lon = userPosition.coords.longitude;
+	var userInputLocation = null;
 	console.log(lat, lon);
-	
+	// console.log(typeof userPosition.coords.heading);
+
 	// Run ajax request function only after you have the user's location
-	etsyApp.getLocalListingsWithGPS(lat, lon);
-};
-
-// Get etsy listings using user's geolocation
-
-etsyApp.getLocalListingsWithGPS = function(lat, lon) {
-	$.ajax({
-		url: "http://proxy.hackeryou.com",
-		method: "GET",
-		dataType: "json",
-		data: {
-			reqUrl: "https://openapi.etsy.com/v2/listings/active",
-			params: {
-				api_key: etsyApp.key,
-				category: "weddings",
-				lat: lat,
-				lon: lon
-				// sort_on: "price"
-				// page: 2
-			},
-			xmlToJSON: false
-		}
-	}).then(function(res) {
-		console.log(res);
-	});
+	etsyApp.getLocalListings(lat, lon, userInputLocation);
 };
 
 
@@ -78,14 +56,18 @@ etsyApp.getUserInput = function() {
 		var userInputLocation = $("input[id='location']").val();
 		$("input[id='location']").val("");
 		console.log(userInputLocation);
+		var lat = undefined;
+		var lon = undefined;
 
 		// Run ajax request function only after you have the user's location
-		etsyApp.getLocalListingsWithLocationInput(userInputLocation);
+		etsyApp.getLocalListings(lat, lon, userInputLocation);
 	});
 };
 
-// Get etsy listings using text location input
-etsyApp.getLocalListingsWithLocationInput = function(userInputLocation) {
+
+// Get etsy listings based on user location (either latitude & longitude coordinates from geolocation OR from location text input if user denied access to geolocation)
+etsyApp.getLocalListings = function(lat, lon, userInputLocation) {
+	
 	$.ajax({
 		url: "http://proxy.hackeryou.com",
 		method: "GET",
@@ -95,9 +77,9 @@ etsyApp.getLocalListingsWithLocationInput = function(userInputLocation) {
 			params: {
 				api_key: etsyApp.key,
 				category: "weddings",
-				location: userInputLocation,
-				lat: "",
-				lon: ""
+				lat: lat,
+				lon: lon,
+				location: userInputLocation
 				// sort_on: "price"
 				// page: 2
 			},
@@ -107,7 +89,6 @@ etsyApp.getLocalListingsWithLocationInput = function(userInputLocation) {
 		console.log(res);
 	});
 };
-
 
 
 
