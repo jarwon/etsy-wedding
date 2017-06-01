@@ -46,6 +46,7 @@ etsyApp.userLocation = function(userPosition){
 };
 
 // Get etsy listings using user's geolocation
+
 etsyApp.getLocalListingsWithGPS = function(lat, lon) {
 	$.ajax({
 		url: "http://proxy.hackeryou.com",
@@ -94,7 +95,9 @@ etsyApp.getLocalListingsWithLocationInput = function(userInputLocation) {
 			params: {
 				api_key: etsyApp.key,
 				category: "weddings",
-				location: userInputLocation
+				location: userInputLocation,
+				lat: "",
+				lon: ""
 				// sort_on: "price"
 				// page: 2
 			},
