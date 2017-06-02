@@ -134,14 +134,12 @@ section.categories {
 		float: left;
 		text-align: center;
 		position: relative;
-		border: 1px solid blue;
 		.imageContainer {
 			width: 250px;
 			height: 100%;
 			text-align: center;
 			position: relative;
 			display: inline-block;
-			border: 1px solid red;
 		}
 		img {
 			max-width: 100%;
@@ -153,7 +151,6 @@ section.categories {
 			opacity: 0.7;
 			position: absolute;
 			bottom: 0;
-			// left: calc(50% - 125px);
 			left: 0;
 			right: 0;
 			p {
