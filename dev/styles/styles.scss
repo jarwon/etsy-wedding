@@ -14,7 +14,7 @@ body {
 }
 
 h1 {
-	@include headingFont(72px, $grey);
+	@include headingFont(72px, $black);
 	text-align: center;
 	background-color: rgba(239, 216, 225, 0.75);
 	display: inline-block;
@@ -128,7 +128,7 @@ section.categories {
 	border: 1px solid red;
 	margin-top: 100px;
 	h3 {
-		@include headingFont(30px, $grey);
+		@include headingFont(30px, $black);
 		text-align: center;
 		display: inline-block;
 		background-color: $pink;
@@ -152,7 +152,13 @@ section.categories {
 		float: left;
 		text-align: center;
 		position: relative;
-
+		.imageContainer {
+			width: 250px;
+			height: 100%;
+			text-align: center;
+			position: relative;
+			display: inline-block;
+		}
 		img {
 			max-width: 100%;
 		}
@@ -163,7 +169,7 @@ section.categories {
 			opacity: 0.7;
 			position: absolute;
 			bottom: 0;
-			left: calc(50% - 125px);
+			left: 0;
 			right: 0;
 			p {
 				@include bodyFont(14px, $grey)
@@ -254,9 +260,6 @@ button.currentPg {
 
 	section.categories {
 		h3 {
-			@include headingFont(30px, $grey);
-			text-align: center;
-			padding: 10px;
 			margin: 20px 0 0px 20px;
 		}
 		.squareCategory {
@@ -289,7 +292,13 @@ button.currentPg {
 @media (max-width: 480px) {
 	h1 {
 		@include headingFont(50px, $black);
+		margin: 20px 0;
 	}
+
+	form {
+		margin: 20px 0;
+	}
+
 
 	input[id=location] {
 		margin-bottom: 5px;
