@@ -84,7 +84,7 @@ etsyApp.getLocalListings = function(lat, lon, userInputLocation, currentPg) {
 		method: "GET",
 		dataType: "json",
 		data: {
-			reqUrl: "https://openapi.etsy.com/v2/listings/active?includes=MainImage",
+			reqUrl: "https://openapi.etsy.com/v2/listings/active",
 			params: {
 				api_key: etsyApp.key,
 				category: "weddings",
