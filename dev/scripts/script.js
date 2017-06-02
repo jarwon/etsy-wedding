@@ -264,13 +264,24 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 				page: currentPg
 			},
 			xmlToJSON: false
-		}
+		},
+
 	}).then(function(res){
 		console.log(res);
-	});
-	});
-}
 
+		var itemDesc = res.results.description
+		var itemPrice = res.results.price
+		var itemTitle = res.results.title
+		var itemUrl = res.results.Url
+
+		res.results.forEach(function(){
+		$(".categoryItems").append(`<h3>${itemTitle}</h3><p>${itemPrice}</p><p>${itemDesc}</p><a href="${itemUrl}"><img src="http://via.placeholder.com/250x250"></a>`);
+		});
+	});
+
+//get results from the clicked category
+//go over each object in the array
+//append to container
 
 
 
