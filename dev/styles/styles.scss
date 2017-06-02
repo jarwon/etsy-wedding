@@ -134,6 +134,10 @@ section.categories {
 		float: left;
 		text-align: center;
 		position: relative;
+
+		img {
+			max-width: 100%;
+		}
 		.overlay {
 			height: 75px;
 			width: 250px;
@@ -182,6 +186,7 @@ section.listings {
 			p {
 				display: inline-block;
 				margin: 0 10px;
+				font-style: italic;
 			}
 			input[type=number] {
 				width: 50px;
@@ -191,6 +196,20 @@ section.listings {
 			}
 		}
 	}
+}
+
+.pgNumButtonsContainer button {
+	background-color: $grey;
+	border: none;
+	color: #fff;
+	height: 50px;
+	width: 50px;
+	margin: 2px;
+	text-align: center;
+	&:active {
+		background-color: red;
+	}
+
 }
 
 
