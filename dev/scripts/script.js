@@ -266,7 +266,7 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 			xmlToJSON: false
 		}
 	}).then(function(res){
-		console.log(res);
+		console.log('subcategory',res);
 	});
 	});
 }

@@ -93,6 +93,10 @@ section.categories {
 		float: left;
 		margin: 40px;
 		position: relative;
+
+		img {
+			max-width: 100%;
+		}
 		.overlay {
 			height: 75px;
 			background: linear-gradient(to bottom, #fff, $purple);
