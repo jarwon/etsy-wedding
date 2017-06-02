@@ -144,6 +144,7 @@ section.category {
 			p {
 				display: inline-block;
 				margin: 0 10px;
+				font-style: italic;
 			}
 			input[type=number] {
 				width: 50px;
@@ -153,6 +154,20 @@ section.category {
 			}
 		}
 	}
+}
+
+.pgNumButtonsContainer button {
+	background-color: $grey;
+	border: none;
+	color: #fff;
+	height: 50px;
+	width: 50px;
+	margin: 2px;
+	text-align: center;
+	&:active {
+		background-color: red;
+	}
+
 }
 
 
