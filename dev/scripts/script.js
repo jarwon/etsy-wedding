@@ -18,6 +18,7 @@ etsyApp.selectedPg = 1;
 etsyApp.currentPgNums = [];
 etsyApp.showLHSarrow = false;
 etsyApp.showRHSarrow = false;
+// var imageURL = "https://openapi.etsy.com/v2/listings/active.js?includes=MainImage"
 
 //initializes app
 etsyApp.init = function() {
@@ -79,7 +80,7 @@ etsyApp.getLocalListings = function(lat, lon, userInputLocation, currentPg) {
 		method: "GET",
 		dataType: "json",
 		data: {
-			reqUrl: "https://openapi.etsy.com/v2/listings/active",
+			reqUrl: "https://openapi.etsy.com/v2/listings/active?includes=MainImage",
 			params: {
 				api_key: etsyApp.key,
 				category: "weddings",
@@ -245,47 +246,54 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 	//bring user to category page on click
 	$(".squareCategory").on("click", function() {
 		//on click of category, get id of category and
-	var	cat = $(this).attr("id");
-		console.log(cat);
+		$(".categoryItems").empty();
+		var	cat = $(this).attr("id");
+			console.log(cat);
 
-	$.ajax({
-		url: "http://proxy.hackeryou.com",
-		method: "GET",
-		dataType: "json",
-		data: {
-			reqUrl: "https://openapi.etsy.com/v2/listings/active",
-			params: {
-				api_key: etsyApp.key,
-				category: `weddings/${cat}`,
-				lat: lat,
-				lon: lon,
-				location: userInputLocation,
-				// sort_on: "price"
-				page: currentPg
+		$.ajax({
+			url: "http://proxy.hackeryou.com",
+			method: "GET",
+			dataType: "json",
+			data: {
+				reqUrl: "https://openapi.etsy.com/v2/listings/active",
+				params: {
+					api_key: etsyApp.key,
+					category: `Weddings/${cat}`,
+					tags: "Wedding",
+					lat: lat,
+					lon: lon,
+					location: userInputLocation,
+					// sort_on: "price"
+					page: currentPg
+				},
+				xmlToJSON: false
 			},
-			xmlToJSON: false
-		},
 
-	}).then(function(res){
-		console.log(res);
-
-		var itemDesc = res.results.description
-		var itemPrice = res.results.price
-		var itemTitle = res.results.title
-		var itemUrl = res.results.Url
-
-		res.results.forEach(function(){
-		$(".categoryItems").append(`<h3>${itemTitle}</h3><p>${itemPrice}</p><p>${itemDesc}</p><a href="${itemUrl}"><img src="http://via.placeholder.com/250x250"></a>`);
+		}).then(function(res){
+			console.log(res);
+				for (let i = 0; i < res.results.length; i++) {
+					console.log(res.results[i]);
+					$(".categoryItems").append(`
+						<div class="eachItem">
+							<a href="${res.results[i].url}"><img src="http://via.placeholder.com/250x250"></a>
+							<h3>${res.results[i].title}</h3>
+							<p>$${res.results[i].price}</p>
+							<p class="itemDescription">${res.results[i].description}</p>	
+						</div>
+					`);
+					// var itemDescriptionShort = $(`${res.results[i].description}`);
+					// itemDescriptionShort.text(itemDescriptionShort.text().substring(0,300));
+				}
 		});
-	});
+	})
+}
 
 //get results from the clicked category
 //go over each object in the array
 //append to container
 
 
-
 $(function() {
 	etsyApp.init();
 	etsyApp.getCategory();
-})
+});

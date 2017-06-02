@@ -150,7 +150,14 @@ section.category {
 			}
 		}
 	}
+	.eachItem {
+		float: left;
+		width: 30%;
+		margin: 20px;
+	}
 }
+
+
 
 .pgNumButtonsContainer button {
 	background-color: $grey;
