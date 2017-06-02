@@ -242,11 +242,10 @@ etsyApp.getPriceRange = function() {
 
 
 etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
-	var cat;
 	//bring user to category page on click
 	$(".squareCategory").on("click", function() {
 		//on click of category, get id of category and
-		cat = $(this).attr("id");
+	var	cat = $(this).attr("id");
 		console.log(cat);
 
 	$.ajax({
