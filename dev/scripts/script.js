@@ -6,7 +6,6 @@
 // ? Provide option to sort listings by: distance, price, etc.
 // If user clicks on a listing, it will bring them to the corresponding etsy listing page
 
-
 const etsyApp = {};
 
 //global variables 
@@ -27,7 +26,9 @@ etsyApp.init = function() {
 
 // Landing page: Get user's location either by device's navigator geolocation if access allowed OR from user's location text input if they deny access to navigator geolocation
 etsyApp.getLocation = function() {
-	if (navigator.geolocation) {
+	
+	$("button.findGeolocation").on("click", function() {
+
 		navigator.geolocation.getCurrentPosition(function(userPosition) {
 		// If user allows access to navigator geolocation, then run ajax request using their longitude & latitude coordinates
 			console.log("location access allowed");
@@ -35,9 +36,12 @@ etsyApp.getLocation = function() {
 		}, function(error) {
 		// If user denies access to geolocation, then run ajax request using their location text input
 			console.log("location access denied");
-			etsyApp.getUserInput();
 		});
-	};
+	});
+
+	$("input[type=submit]").on("click", function() {		
+		etsyApp.getUserInput();
+	});
 };
 
 
@@ -56,7 +60,7 @@ etsyApp.userLocation = function(userPosition){
 
 // Get user's location from text input field (city name - can be more specific if they wish, e.g. "Sydney, Australia"; just "Sydney" gives listings from Sydney, Nova Scotia)
 etsyApp.getUserInput = function() {
-	$("form").on("submit", function(e) {
+	$("#form").on("submit", function(e) {
 		e.preventDefault();
 
 		etsyApp.userInputLocation = $("input[id='location']").val();
