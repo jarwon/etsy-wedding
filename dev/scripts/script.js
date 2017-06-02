@@ -130,7 +130,7 @@ var clearExisting = function () {
 // check if number of pages is <5 and fill currentPgNums array
 var chkPgNums = function(totPgs) {
 	if (totPgs <=5 ) {
-		for (var i = 0 ; i < totPgs ; i = i + 1) {
+		for (var i = 1 ; i <= totPgs ; i = i + 1) {
 			console.log("first");
 			var pushNum = i;
 			// make an array of the total page numbers
@@ -204,7 +204,15 @@ var createScreenButtons = function(pgNumArray) {
 	for (var i = 0; i < pgNumArray.length; i = i + 1) {
 		let theButtonNum = pgNumArray[i];
 
-		var pgButton = $("<button>").addClass("pgButton").text(theButtonNum);
+		console.log('selected pg', etsyApp.selectedPg);
+		console.log('button num', pgNumArray[i]);
+
+		if ( pgNumArray[i] === etsyApp.selectedPg) {
+			var pgButton = $("<button>").addClass("pgButton currentPg").text(theButtonNum);
+		}
+		else {
+			var pgButton = $("<button>").addClass("pgButton").text(theButtonNum);
+		}
 
 		// console.log(">>", theButtonNum)
 
