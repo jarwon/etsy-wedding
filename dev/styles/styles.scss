@@ -3,21 +3,22 @@
 @import "partials/mixins";
 
 
+body {
+	background-color: #fff;
+	@include bodyFont(16px, $black);
+}
+
 .wrapper {
-	width: 1280px;
+	max-width: 1280px;
 	margin: 0 auto;
 }
 
-body {
-	background-color: #fff;
-}
-
 h1 {
-	@include headingFont(72px, $grey);
+	@include headingFont(72px, $black);
 	text-align: center;
-	background-color: $pink;
+	background-color: rgba(239, 216, 225, 0.75);
 	display: inline-block;
-	padding: 10px;
+	padding: 10px 20px;
 }
 
 p {
@@ -31,7 +32,7 @@ a {
 }
 
 h2 {
-	@include headingFont(26px, $black);
+	@include headingFont(45px, $black);
 	background-color: transparent;
 	text-align: center;
 	display: block;
@@ -45,56 +46,125 @@ form {
 	width: 100%;
 }
 
-label {
+label[for=location] {
 	text-transform: lowercase;
 	font-style: italic;
+	display: block;
+	margin-bottom: 5px;
 }
 
 input[type=text], input[type=number] {
 	font-family: "Lato", sans-serif;
 	background-color: $pink;
-	color: $grey;
+	color: $black;
 	outline: none;
 	border: none;
+	border-radius: 2px;
 	padding: 10px 20px;
 	margin-right: 10px;
+	&:focus {
+		outline: 1px solid $purple;
+	}
 }
 
 input[type=submit] {
 	background-color: $grey;
 	border: none;
+	border-radius: 2px;
 	padding: 10px 20px;
 	text-transform: uppercase;
 	color: #fff;
+	transition: all 0.5s;
+	&:hover {
+		background-color: $black;
+	}
+}
+
+button.findGeolocation {
+	padding: 10px 20px;
+	border: none;
+	border-radius: 2px;
+	background-color: $grey;
+	color: white;
+	text-transform: uppercase;
+	transition: all 0.5s;
+	&:hover {
+		background-color: $black;
+	}
+}
+
+.homeWrapper {
+	background-image: url(../assets/hero_2.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+
 }
 
 section.home {
-	padding-top: calc(50vh - 150px);
 	margin: 0 auto;
 	height: 100vh;
-	display: block;
 	text-align: center;
-	width: 50%;
+	max-width: 650px;
+	padding: 0 10px;
+	.content {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+.homeOverlay {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(239, 216, 225, 0.4);
 }
 
 section.categories {
+	border: 1px solid red;
 	margin-top: 100px;
-	padding: 0 130px;
-	h1 {
-		@include headingFont(30px, $grey);
+	h3 {
+		@include headingFont(30px, $black);
 		text-align: center;
+		display: inline-block;
 		background-color: $pink;
 		padding: 10px;
-		margin: 40px 0 40px 40px;
+		margin: 40px 0 0px 40px;
+	}
+	.logo {
+		display: none;
+	}
+	.grid {
+		max-width: 1000px;
+		margin: 0 auto;
+		h2 {
+			margin-top: 10px;
+		}
 	}
 	.squareCategory {
 		height: 250px;
-		width: 250px;
+		width: 33.3%;
+		margin-bottom: 40px;
 		float: left;
-		margin: 40px;
+		text-align: center;
 		position: relative;
+		.imageContainer {
+			width: 250px;
+			height: 100%;
+			text-align: center;
+			position: relative;
+			display: inline-block;
+		}
+		img {
+			max-width: 100%;
+		}
 		.overlay {
 			height: 75px;
+			width: 250px;
 			background: linear-gradient(to bottom, #fff, $purple);
 			opacity: 0.7;
 			position: absolute;
@@ -111,9 +181,7 @@ section.categories {
 	}
 }
 
-
-
-section.category {
+section.listings {
 	margin: 100px 50px 100px 0px;
 	h2 {
 		color: #fff;
@@ -188,10 +256,95 @@ section.category {
 	width: 50px;
 	margin: 2px;
 	text-align: center;
+	&:hover {
+		background-color: $black;
+	}
 	&:active {
 		background-color: red;
 	}
-
 }
 
+button.currentPg {
+	color: rgba(51, 51, 51, 0.75);
+	background-color: rgba(142, 142, 142, 0.4);
+	&:hover {
+		background-color: $black;
+		color: white;
+	}
+}
 
+// RESPONSIVE
+/* Portrait tablet and small desktops */
+@media (max-width: 940px) {
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 768px) {
+	h1 {
+		@include headingFont(60px, $black);
+	}
+
+	section.categories {
+		h3 {
+			margin: 20px 0 0px 20px;
+		}
+		.squareCategory {
+			width: 50%;
+		}
+		.grid {
+			h2 {
+				font-size: 35px;
+			}
+		}
+	}
+
+	.pgNumButtonsContainer button {
+		height: 40px;
+		width: 40px;
+		margin: 3px;
+	}
+}
+
+// Category section break to single column
+@media (max-width: 550px) {
+	section.categories {
+		.squareCategory {
+			width: 100%;
+		}
+	}
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+	h1 {
+		@include headingFont(50px, $black);
+		margin: 20px 0;
+	}
+
+	form {
+		margin: 20px 0;
+	}
+
+
+	input[id=location] {
+		margin-bottom: 5px;
+	}
+
+	section.categories {
+		h3 {
+			display: none;
+		}
+		.logo {
+			display: block;
+			background-color: white;
+			width: 75px;
+			height: 75px;
+			margin: 10px 0 0 10px;
+		}
+	}
+		.pgNumButtonsContainer button {
+			height: 33px;
+			width: 33px;
+			margin: 5px;
+	}
+}

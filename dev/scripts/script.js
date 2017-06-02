@@ -6,7 +6,6 @@
 // ? Provide option to sort listings by: distance, price, etc.
 // If user clicks on a listing, it will bring them to the corresponding etsy listing page
 
-
 const etsyApp = {};
 
 //global variables 
@@ -28,7 +27,9 @@ etsyApp.init = function() {
 
 // Landing page: Get user's location either by device's navigator geolocation if access allowed OR from user's location text input if they deny access to navigator geolocation
 etsyApp.getLocation = function() {
-	if (navigator.geolocation) {
+	
+	$("button.findGeolocation").on("click", function() {
+
 		navigator.geolocation.getCurrentPosition(function(userPosition) {
 		// If user allows access to navigator geolocation, then run ajax request using their longitude & latitude coordinates
 			console.log("location access allowed");
@@ -36,9 +37,12 @@ etsyApp.getLocation = function() {
 		}, function(error) {
 		// If user denies access to geolocation, then run ajax request using their location text input
 			console.log("location access denied");
-			etsyApp.getUserInput();
 		});
-	};
+	});
+
+	$("input[type=submit]").on("click", function() {		
+		etsyApp.getUserInput();
+	});
 };
 
 
@@ -57,7 +61,7 @@ etsyApp.userLocation = function(userPosition){
 
 // Get user's location from text input field (city name - can be more specific if they wish, e.g. "Sydney, Australia"; just "Sydney" gives listings from Sydney, Nova Scotia)
 etsyApp.getUserInput = function() {
-	$("form").on("submit", function(e) {
+	$("#form").on("submit", function(e) {
 		e.preventDefault();
 
 		etsyApp.userInputLocation = $("input[id='location']").val();
@@ -131,7 +135,7 @@ var clearExisting = function () {
 // check if number of pages is <5 and fill currentPgNums array
 var chkPgNums = function(totPgs) {
 	if (totPgs <=5 ) {
-		for (var i = 0 ; i < totPgs ; i = i + 1) {
+		for (var i = 1 ; i <= totPgs ; i = i + 1) {
 			console.log("first");
 			var pushNum = i;
 			// make an array of the total page numbers
@@ -205,7 +209,15 @@ var createScreenButtons = function(pgNumArray) {
 	for (var i = 0; i < pgNumArray.length; i = i + 1) {
 		let theButtonNum = pgNumArray[i];
 
-		var pgButton = $("<button>").addClass("pgButton").text(theButtonNum);
+		console.log('selected pg', etsyApp.selectedPg);
+		console.log('button num', pgNumArray[i]);
+
+		if ( pgNumArray[i] === etsyApp.selectedPg) {
+			var pgButton = $("<button>").addClass("pgButton currentPg").text(theButtonNum);
+		}
+		else {
+			var pgButton = $("<button>").addClass("pgButton").text(theButtonNum);
+		}
 
 		// console.log(">>", theButtonNum)
 
@@ -267,23 +279,22 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 					page: currentPg
 				},
 				xmlToJSON: false
-			},
-
-		}).then(function(res){
-			console.log(res);
-				for (let i = 0; i < res.results.length; i++) {
-					console.log(res.results[i]);
-					$(".categoryItems").append(`
-						<div class="eachItem">
-							<a href="${res.results[i].url}"><img src="http://via.placeholder.com/200x200"></a>
-							<h4>${res.results[i].title}</h4>
-							<p>$${res.results[i].price}</p>
-							<p class="itemDescription">${res.results[i].description.substring(0,300)}</p>	
-						</div>
-					`);
-				}
-		});
-	})
+		}
+	}).then(function(res){
+		console.log('subcategory',res);
+		for (let i = 0; i < res.results.length; i++) {
+			console.log(res.results[i]);
+			$(".categoryItems").append(`
+				<div class="eachItem">
+					<a href="${res.results[i].url}"><img src="http://via.placeholder.com/200x200"></a>
+					<h4>${res.results[i].title}</h4>
+					<p>$${res.results[i].price}</p>
+					<p class="itemDescription">${res.results[i].description.substring(0,300)}</p>	
+				</div>
+			`);
+		};
+	});
+	});
 }
 
 //get results from the clicked category
