@@ -3,13 +3,14 @@
 @import "partials/mixins";
 
 
-.wrapper {
-	width: 1280px;
-	margin: 0 auto;
-}
-
 body {
 	background-color: #fff;
+	@include bodyFont(16px, $black);
+}
+
+.wrapper {
+	max-width: 1280px;
+	margin: 0 auto;
 }
 
 h1 {
@@ -17,7 +18,7 @@ h1 {
 	text-align: center;
 	background-color: $pink;
 	display: inline-block;
-	padding: 10px;
+	padding: 10px 20px;
 }
 
 p {
@@ -31,7 +32,7 @@ a {
 }
 
 h2 {
-	@include headingFont(26px, $black);
+	@include headingFont(45px, $black);
 	background-color: transparent;
 	text-align: center;
 	display: block;
@@ -45,61 +46,102 @@ form {
 	width: 100%;
 }
 
-label {
+label[for=location] {
 	text-transform: lowercase;
 	font-style: italic;
+	display: block;
+	margin-bottom: 5px;
 }
 
 input[type=text], input[type=number] {
 	font-family: "Lato", sans-serif;
 	background-color: $pink;
-	color: $grey;
+	color: $black;
 	outline: none;
 	border: none;
+	border-radius: 2px;
 	padding: 10px 20px;
 	margin-right: 10px;
+	&:focus {
+		outline: 1px solid $purple;
+	}
 }
 
 input[type=submit] {
 	background-color: $grey;
 	border: none;
+	border-radius: 2px;
 	padding: 10px 20px;
 	text-transform: uppercase;
 	color: #fff;
+	transition: all 0.5s;
+	&:hover {
+		background-color: $black;
+	}
+}
+
+button.findGeolocation {
+	padding: 10px 20px;
+	border: none;
+	border-radius: 2px;
+	background-color: $grey;
+	color: white;
+	text-transform: uppercase;
+	transition: all 0.5s;
+	&:hover {
+		background-color: $black;
+	}
 }
 
 section.home {
-	padding-top: calc(50vh - 150px);
 	margin: 0 auto;
 	height: 100vh;
-	display: block;
 	text-align: center;
-	width: 50%;
+	max-width: 650px;
+	padding: 0 10px;
+	.content {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+	}
 }
 
 section.categories {
+	border: 1px solid red;
 	margin-top: 100px;
-	padding: 0 130px;
-	h1 {
+	h3 {
 		@include headingFont(30px, $grey);
 		text-align: center;
+		display: inline-block;
 		background-color: $pink;
 		padding: 10px;
-		margin: 40px 0 40px 40px;
+		margin: 40px 0 0px 40px;
+	}
+	.logo {
+		display: none;
+	}
+	.grid {
+		max-width: 1000px;
+		margin: 0 auto;
+		h2 {
+			margin-top: 10px;
+		}
 	}
 	.squareCategory {
 		height: 250px;
-		width: 250px;
+		width: 33.3%;
+		margin-bottom: 40px;
 		float: left;
-		margin: 40px;
+		text-align: center;
 		position: relative;
 		.overlay {
 			height: 75px;
+			width: 250px;
 			background: linear-gradient(to bottom, #fff, $purple);
 			opacity: 0.7;
 			position: absolute;
 			bottom: 0;
-			left: 0;
+			left: calc(50% - 125px);
 			right: 0;
 			p {
 				@include bodyFont(14px, $grey)
@@ -113,7 +155,7 @@ section.categories {
 
 
 
-section.category {
+section.listings {
 	h2 {
 		color: #fff;
 	}
@@ -152,3 +194,64 @@ section.category {
 }
 
 
+// RESPONSIVE
+/* Portrait tablet and small desktops */
+@media (max-width: 940px) {
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 768px) {
+	h1 {
+		@include headingFont(60px, $black);
+	}
+
+	section.categories {
+		h3 {
+			@include headingFont(30px, $grey);
+			text-align: center;
+			padding: 10px;
+			margin: 20px 0 0px 20px;
+		}
+		.squareCategory {
+			width: 50%;
+		}
+		.grid {
+			h2 {
+				font-size: 35px;
+			}
+		}
+	}
+}
+
+// Category section break to single column
+@media (max-width: 550px) {
+	section.categories {
+		.squareCategory {
+			width: 100%;
+		}
+	}
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+	h1 {
+		@include headingFont(50px, $black);
+	}
+
+	input[id=location] {
+		margin-bottom: 5px;
+	}
+
+	section.categories {
+		h3 {
+			display: none;
+		}
+		.logo {
+			display: block;
+			background-color: white;
+			width: 75px;
+			height: 75px;
+			margin: 10px 0 0 10px;
+		}
+	}
+}

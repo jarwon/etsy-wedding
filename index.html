@@ -5,80 +5,104 @@
 	<title>etsy wedding ewwwwwww</title>
 	<link rel="stylesheet" href="./public/styles/style.css">
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-<section class="home clearfix">
+	<div class="wrapper">
+		
+		<section class="home">
+			<div class="content">
+				<h1>wedding bells</h1>
 
-	<h1>wedding bells</h1>
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque excepturi aut provident nulla ex dignissimos, laborum quas exercitationem possimus aspernatur. Esse nam nostrum voluptatum sit saepe est ipsum quisquam ab!</p>
-	<form action="#" id="form" class="clearfix">
-		<label for="location">enter your location:</label>
-		<input type="text" id="location">
-		<input type="submit">
-	</form>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque excepturi aut provident nulla ex dignissimos, laborum quas exercitationem possimus aspernatur. Esse nam nostrum voluptatum sit saepe est ipsum quisquam ab!</p>
 
-</section>
+				<form action="#" id="form">
+					<label for="location">Enter your location:</label>
+					<input type="text" id="location">
+					<input type="submit">
+					
+					<p>or</p>
 
+					<button class="findGeolocation">Use my current location</button>
 
-
-
-<section class="categories clearfix">
-	<h1>wedding bells</h1>
-	<h2>choose a category</h2>
-	<div class="squareCategory squareCategory-1 clearfix">
-		<img src="http://via.placeholder.com/250x250" alt="">
-		<div class="overlay"><p>Accessories</p></div>
-	</div>
-	<div class="squareCategory squareCategory-2">
-		<img src="http://via.placeholder.com/250x250" alt="">
-		<div class="overlay"><p>Clothing</p></div>
-	</div>
-	<div class="squareCategory squareCategory-3">
-		<img src="http://via.placeholder.com/250x250" alt="">
-		<div class="overlay"><p>Decorations</p></div>
-	</div>
-	<div class="squareCategory squareCategory-4">
-		<img src="http://via.placeholder.com/250x250" alt="">
-		<div class="overlay"><p>Gifts & Momentos</p></div>
-	</div>
-	<div class="squareCategory squareCategory-5">
-		<img src="http://via.placeholder.com/250x250" alt="">
-		<div class="overlay"><p>Invitations</p></div>
-	</div>
-	<div class="squareCategory squareCategory-6">
-		<img src="http://via.placeholder.com/250x250" alt="">
-		<div class="overlay"><p>Jewellery</p></div>
-	</div>
-</section>
+				</form>
+			</div> <!-- /.content -->
+		</section> <!-- /.home -->
 
 
 
 
-<section class="category">
-	<aside>
-		<label for="location">change location:</label>
-		<input type="text" id="location">
-		<input type="submit">
-		<h2>accessories</h2>
-		<ul>
-			<li><a href="#" alt="">Accessories</a></li>
-			<li><a href="#" alt="">Clothing</a></li>
-			<li><a href="#" alt="">Decorations</a></li>
-			<li><a href="#" alt="">Gift & Momentos</a></li>
-			<li><a href="#" alt="">Invitations</a></li>
-			<li><a href="#" alt="">Jewellery</a></li>
-		</ul>
-		<div class="price">
-			<p>price range:</p>
-			<p>$</p><input type="number" id="minPrice" min="0">
-			<p>to</p>
-			<p>$</p><input type="number" id="maxPrice" min="0">
-		</div>
-	</aside>
-</section>
+		<section class="categories">
+			<h3>wedding bells</h3>
+			<h3 class="logo"><img src="dev/assets/logo.svg" alt=""></h3>
 
-	<div class="pgNumButtonsContainer"></div>
+			<div class="grid clearfix">
+				<h2>choose a category</h2>
+
+				<div class="squareCategory squareCategory-1">
+					<img src="http://via.placeholder.com/250x250" alt="">
+					<div class="overlay"><p>Accessories</p></div>
+				</div>
+
+				<div class="squareCategory squareCategory-2">
+					<img src="http://via.placeholder.com/250x250" alt="">
+					<div class="overlay"><p>Clothing</p></div>
+				</div>
+
+				<div class="squareCategory squareCategory-3">
+					<img src="http://via.placeholder.com/250x250" alt="">
+					<div class="overlay"><p>Decorations</p></div>
+				</div>
+
+				<div class="squareCategory squareCategory-4">
+					<img src="http://via.placeholder.com/250x250" alt="">
+					<div class="overlay"><p>Gifts & Momentos</p></div>
+				</div>
+
+				<div class="squareCategory squareCategory-5">
+					<img src="http://via.placeholder.com/250x250" alt="">
+					<div class="overlay"><p>Invitations</p></div>
+				</div>
+
+				<div class="squareCategory squareCategory-6">
+					<img src="http://via.placeholder.com/250x250" alt="">
+					<div class="overlay"><p>Jewellery</p></div>
+				</div>
+			</div> <!-- /.grid -->
+		</section> <!-- /.categories -->
+
+
+
+
+		<section class="listings">
+			<aside>
+				<label for="location">change location:</label>
+				<input type="text" id="location">
+				<input type="submit">
+
+				<h2>accessories</h2>
+				<ul>
+					<li><a href="#" alt="">Accessories</a></li>
+					<li><a href="#" alt="">Clothing</a></li>
+					<li><a href="#" alt="">Decorations</a></li>
+					<li><a href="#" alt="">Gift & Momentos</a></li>
+					<li><a href="#" alt="">Invitations</a></li>
+					<li><a href="#" alt="">Jewellery</a></li>
+				</ul>
+
+				<div class="price">
+					<p>price range:</p>
+					<p>$</p><input type="number" id="minPrice" min="0">
+					<p>to</p>
+					<p>$</p><input type="number" id="maxPrice" min="0">
+				</div>
+			</aside>
+		</section> <!-- /.listings -->
+
+		<div class="pgNumButtonsContainer"></div>
+	</div> <!-- /.wrapper -->
+
 
 
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
