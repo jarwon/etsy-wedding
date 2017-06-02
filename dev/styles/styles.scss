@@ -131,7 +131,7 @@ section.categories {
 		@include headingFont(30px, $black);
 		text-align: center;
 		display: inline-block;
-		background-color: $pink;
+		background-color: rgba(239, 216, 225, 0.75);
 		padding: 10px;
 		margin: 40px 0 0px 40px;
 	}
