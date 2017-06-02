@@ -275,14 +275,12 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 					console.log(res.results[i]);
 					$(".categoryItems").append(`
 						<div class="eachItem">
-							<a href="${res.results[i].url}"><img src="http://via.placeholder.com/250x250"></a>
-							<h3>${res.results[i].title}</h3>
+							<a href="${res.results[i].url}"><img src="http://via.placeholder.com/200x200"></a>
+							<h4>${res.results[i].title}</h4>
 							<p>$${res.results[i].price}</p>
-							<p class="itemDescription">${res.results[i].description}</p>	
+							<p class="itemDescription">${res.results[i].description.substring(0,300)}</p>	
 						</div>
 					`);
-					// var itemDescriptionShort = $(`${res.results[i].description}`);
-					// itemDescriptionShort.text(itemDescriptionShort.text().substring(0,300));
 				}
 		});
 	})
