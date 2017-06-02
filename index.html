@@ -8,8 +8,8 @@
 </head>
 <body>
 
+<!-- home page -->
 <section class="home clearfix">
-
 	<h1>wedding bells</h1>
 	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque excepturi aut provident nulla ex dignissimos, laborum quas exercitationem possimus aspernatur. Esse nam nostrum voluptatum sit saepe est ipsum quisquam ab!</p>
 	<form action="#" id="form" class="clearfix">
@@ -17,44 +17,63 @@
 		<input type="text" id="location">
 		<input type="submit">
 	</form>
-
 </section>
 
 
 
-
+<!-- categories page -->
 <section class="categories clearfix">
 	<h1>wedding bells</h1>
 	<h2>choose a category</h2>
-	<div class="squareCategory squareCategory-1 clearfix">
+
+	<div class="squareCategory squareCategory-1" id="accessories">
+		<a href="#" alt="">
 		<img src="http://via.placeholder.com/250x250" alt="">
+		</a>
 		<div class="overlay"><p>Accessories</p></div>
 	</div>
-	<div class="squareCategory squareCategory-2">
+
+	<div class="squareCategory squareCategory-2" id="clothing">
+		<a href="#" alt="">
 		<img src="http://via.placeholder.com/250x250" alt="">
+		</a>
 		<div class="overlay"><p>Clothing</p></div>
 	</div>
-	<div class="squareCategory squareCategory-3">
+
+	<div class="squareCategory squareCategory-3" id="decorations">
+		<a href="#" alt="">
 		<img src="http://via.placeholder.com/250x250" alt="">
+		</a>
 		<div class="overlay"><p>Decorations</p></div>
 	</div>
-	<div class="squareCategory squareCategory-4">
+
+	<div class="squareCategory squareCategory-4" id="gifts">
+		<a href="#" alt="">
 		<img src="http://via.placeholder.com/250x250" alt="">
+		</a>
 		<div class="overlay"><p>Gifts & Momentos</p></div>
 	</div>
-	<div class="squareCategory squareCategory-5">
+
+	<div class="squareCategory squareCategory-5" id="invitations">
+		<a href="#" alt="">
 		<img src="http://via.placeholder.com/250x250" alt="">
+		</a>
 		<div class="overlay"><p>Invitations</p></div>
 	</div>
-	<div class="squareCategory squareCategory-6">
+
+	<div class="squareCategory squareCategory-6" id="jewellery">
+		<a href="#" alt="">
 		<img src="http://via.placeholder.com/250x250" alt="">
+		</a>
 		<div class="overlay"><p>Jewellery</p></div>
 	</div>
+	
+	<div class="pgNumButtonsContainer"></div>
 </section>
 
 
 
-
+<!-- indivudual category page -->
 <section class="category">
 	<aside>
 		<label for="location">change location:</label>
@@ -62,12 +81,12 @@
 		<input type="submit">
 		<h2>accessories</h2>
 		<ul>
-			<li><a href="#" alt="">Accessories</a></li>
-			<li><a href="#" alt="">Clothing</a></li>
-			<li><a href="#" alt="">Decorations</a></li>
-			<li><a href="#" alt="">Gift & Momentos</a></li>
-			<li><a href="#" alt="">Invitations</a></li>
-			<li><a href="#" alt="">Jewellery</a></li>
+			<li><a href="#" alt="" id="accessories">Accessories</a></li>
+			<li><a href="#" alt="" id="clothing">Clothing</a></li>
+			<li><a href="#" alt="" id="decorations">Decorations</a></li>
+			<li><a href="#" alt="" id="gifts">Gift & Momentos</a></li>
+			<li><a href="#" alt="" id="invitations">Invitations</a></li>
+			<li><a href="#" alt="" id="jewellery">Jewellery</a></li>
 		</ul>
 		<div class="price">
 			<p>price range:</p>
@@ -80,8 +99,7 @@
 
 	<div class="pgNumButtonsContainer"></div>
 
-
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<script src="./dev/scripts/script.js"></script>
+	<script src="./public/scripts/script.js"></script>
 </body>
 </html>
