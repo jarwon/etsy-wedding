@@ -34,6 +34,10 @@ etsyApp.getLocation = function() {
 		// If user allows access to navigator geolocation, then run ajax request using their longitude & latitude coordinates
 			console.log("location access allowed");
 			etsyApp.userLocation(userPosition);
+
+			$('html, body').animate({
+		         scrollTop: $("#categories").offset().top
+		    }, 1000);
 		}, function(error) {
 		// If user denies access to geolocation, then run ajax request using their location text input
 			console.log("location access denied");
@@ -42,6 +46,10 @@ etsyApp.getLocation = function() {
 
 	$("input[type=submit]").on("click", function() {		
 		etsyApp.getUserInput();
+
+		$('html, body').animate({
+	         scrollTop: $("#categories").offset().top
+	    }, 1000);
 	});
 };
 
@@ -293,6 +301,10 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 				</div>
 			`);
 		};
+
+		$('html, body').animate({
+	         scrollTop: $("#listings").offset().top
+	    }, 1000);
 	});
 	});
 }
