@@ -13,12 +13,24 @@ body {
 	margin: 0 auto;
 }
 
+
+.logo {
+	width: 125px;
+	margin-top: 20px;
+}
+
 h1 {
 	@include headingFont(72px, $black);
 	text-align: center;
 	background-color: rgba(239, 216, 225, 0.75);
 	display: inline-block;
 	padding: 10px 20px;
+	margin: 10px 0;
+}
+
+h1 span {
+	color: #69616B;
+	// text-shadow: 1px 1px 0 $black;
 }
 
 p {
@@ -29,6 +41,7 @@ a {
 	text-decoration: none;
 	color: $grey;
 	text-transform: uppercase;
+	cursor: pointer;
 }
 
 h2 {
@@ -228,14 +241,19 @@ section.listings {
 			}
 			p {
 				display: inline-block;
-				margin: 0 10px;
+				margin: 0 5px;
 				font-style: italic;
 			}
 			input[type=number] {
 				width: 50px;
 				padding: 5px;
 				font-size: 12px;
-				margin-left: 5px;
+				// margin-left: 5px;
+			}
+			input[type=submit] {
+				width: 75px;
+				font-size: 12px;
+				padding: 5px;
 			}
 		}
 	}
