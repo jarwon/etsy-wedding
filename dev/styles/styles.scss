@@ -8,31 +8,6 @@ body {
 	@include bodyFont(16px, $black);
 }
 
-.wrapper {
-	max-width: 1280px;
-	margin: 0 auto;
-}
-
-
-.logo {
-	width: 125px;
-	margin-top: 20px;
-}
-
-h1 {
-	@include headingFont(72px, $black);
-	text-align: center;
-	background-color: rgba(239, 216, 225, 0.75);
-	display: inline-block;
-	padding: 10px 20px;
-	margin: 10px 0;
-}
-
-h1 span {
-	color: #69616B;
-	// text-shadow: 1px 1px 0 $black;
-}
-
 p {
 	@include bodyFont(16px, $black);
 }
@@ -42,6 +17,30 @@ a {
 	color: $grey;
 	text-transform: uppercase;
 	cursor: pointer;
+	&:hover {
+		color: $black;
+	}
+}
+
+.wrapper {
+	max-width: 1280px;
+	margin: 0 auto;
+}
+
+.logo img {
+	width: 125px;
+}
+
+h1 {
+	@include headingFont(72px, $black);
+	text-align: center;
+	// background-color: rgba(239, 216, 225, 0.75);
+	display: inline-block;
+	margin: 0;
+}
+
+h1 span, h3 span {
+	color: #69616B;
 }
 
 h2 {
@@ -137,24 +136,33 @@ section.home {
 	background-color: rgba(239, 216, 225, 0.4);
 }
 
-section.categories {
-	margin-top: 100px;
+.brand {
+	position: relative;
+	margin: 30px 15px 0 15px;
 	h3 {
 		@include headingFont(30px, $black);
-		text-align: center;
 		display: inline-block;
-		background-color: rgba(239, 216, 225, 0.75);
-		padding: 10px;
-		margin: 40px 0 0px 40px;
+		// background-color: rgba(239, 216, 225, 0.5);
+		margin: 15px 0;
+		position: absolute;
+		top: 0;
+		left: 60px;
 	}
 	.logo {
-		display: none;
+		display: inline-block;
+		img {
+			width: 70px;
+			height: 70px;
+		}
 	}
+}
+
+section.categories {
 	.grid {
 		max-width: 1000px;
 		margin: 0 auto;
 		h2 {
-			margin-top: 10px;
+			margin-top: 0px;
 		}
 	}
 	.squareCategory {
@@ -190,69 +198,42 @@ section.categories {
 	}
 }
 
+div.imageContainer {
+	background-position: center;
+	background-size: cover;
+}
+
+div#Accessories div.imageContainer {
+	background-image: url(../../public/assets/accessories_1.jpg);
+}
+
+div#Clothing div.imageContainer {
+	background-image: url(../../public/assets/clothing_1.jpg);
+}
+
+div#Decoration div.imageContainer {
+	background-image: url(../../public/assets/decorations/1397266_10155709443060177_201621716474901513_o.jpg);
+}
+
+div#Gifts div.imageContainer {
+	background-image: url(../../public/assets/gift_1.jpg);
+}
+
+div#Invitation div.imageContainer {
+	background-image: url(../../public/assets/invitation.jpg);
+}
+
+div#Jewelry div.imageContainer {
+	background-image: url(../../public/assets/jewllery.jpg);
+}
+
 section.listings {
 	border: 1px solid red;
 	margin: 100px 0;
 	h2 {
 		@include headingFont(40px, white);
 		text-align: left;
-	}
-	aside {
-		#formSidebar {
-			label {
-				font-size: 14px;
-				display: block;
-				margin-bottom: 5px;
-			}
-			input[type=text] {
-				width: 65%;
-				padding: 10px;
-				margin-right: 10px;
-			}
-			input[type=submit] {
-				width: 30%;
-				padding: 10px;
-			}
-		}
-		padding: 30px 15px;
-		// width: 30%;
-		width: 300px;
-		background-color: $purple;
-		float: left;
-		height: auto;
-		ul {
-			list-style-type: none;
-			padding: 0;
-			margin: 0;
-			display: inline-block;
-			width: 100%;
-			li {
-				margin: 10px;
-				font-size: 14px;
-			}
-		}
-		.price {
-			p:first-of-type {
-				display: block;
-				margin: 5px 0;
-			}
-			p {
-				display: inline-block;
-				margin: 0 5px;
-				font-style: italic;
-			}
-			input[type=number] {
-				width: 50px;
-				padding: 5px;
-				font-size: 12px;
-				// margin-left: 5px;
-			}
-			input[type=submit] {
-				width: 75px;
-				font-size: 12px;
-				padding: 5px;
-			}
-		}
+		margin: 30px 0;
 	}
 	.eachItem {
 		float: left;
@@ -262,43 +243,84 @@ section.listings {
 			font-size: 14px;
 		}
 	}
+	position: relative;
 }
 
-div#Accessories div.imageContainer {
-	background-image: url(../../public/assets/accessories_1.jpg);
-	background-position: center;
-	background-size: cover;
+aside {
+	.brand {
+		margin: 0;
+	}
+	#formSidebar {
+		margin: 20px 0;
+		label {
+			font-size: 14px;
+			display: block;
+			margin-bottom: 5px;
+		}
+		input[type=text] {
+			width: 65%;
+			padding: 10px;
+			margin-right: 10px;
+		}
+		input[type=submit] {
+			width: 30%;
+			padding: 10px;
+		}
+	}
+	padding: 30px 15px;
+	// width: 30%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 300px;
+	background-color: $purple;
+	// float: left;
+	height: 100vh;
+	ul {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		display: inline-block;
+		width: 100%;
+		li {
+			margin: 15px 10px;
+			font-size: 14px;
+		}
+	}
+	.price {
+		margin: 20px 0;
+		p:first-of-type {
+			display: block;
+			margin: 5px 0;
+		}
+		p {
+			display: inline-block;
+			margin: 0 5px;
+			font-style: italic;
+		}
+		input[type=number] {
+			width: 50px;
+			padding: 5px;
+			font-size: 12px;
+			// margin-left: 5px;
+		}
+		input[type=submit] {
+			width: 75px;
+			font-size: 12px;
+			padding: 5px;
+		}
+	}
 }
 
-div#Clothing div.imageContainer {
-	background-image: url(../../public/assets/clothing_1.jpg);
-	background-position: center;
-	background-size: cover;
+.categoryItems {
+	border: 1px solid blue;
+	width: calc(100% - 300px);
+	position: absolute;
+	top: 0;
+	right: 0;
 }
 
-div#Decoration div.imageContainer {
-	background-image: url(../../public/assets/decorations/1397266_10155709443060177_201621716474901513_o.jpg);
-	background-position: center;
-	background-size: cover;
-}
 
-div#Gifts div.imageContainer {
-	background-image: url(../../public/assets/gift_1.jpg);
-	background-position: center;
-	background-size: cover;
-}
-
-div#Invitation div.imageContainer {
-	background-image: url(../../public/assets/invitation.jpg);
-	background-position: center;
-	background-size: cover;
-}
-
-div#Jewelry div.imageContainer {
-	background-image: url(../../public/assets/jewllery.jpg);
-	background-position: center;
-	background-size: cover;
-}
 
 .pgNumButtonsContainer button {
 	background-color: $grey;
@@ -325,6 +347,7 @@ button.currentPg {
 	}
 }
 
+
 // RESPONSIVE
 /* Portrait tablet and small desktops */
 @media (max-width: 940px) {
@@ -337,15 +360,12 @@ button.currentPg {
 	}
 
 	section.categories {
-		h3 {
-			margin: 20px 0 0px 20px;
-		}
 		.squareCategory {
 			width: 50%;
 		}
 		.grid {
 			h2 {
-				font-size: 35px;
+				font-size: 40px;
 			}
 		}
 	}
@@ -369,8 +389,12 @@ button.currentPg {
 /* Landscape phones and down */
 @media (max-width: 480px) {
 	h1 {
-		@include headingFont(50px, $black);
-		margin: 20px 0;
+		@include headingFont(45px, $black);
+		// margin: 20px 0;
+	}
+
+	.logo img {
+		width: 80px;
 	}
 
 	form {
@@ -386,13 +410,13 @@ button.currentPg {
 		h3 {
 			display: none;
 		}
-		.logo {
-			display: block;
-			background-color: white;
-			width: 75px;
-			height: 75px;
-			margin: 10px 0 0 10px;
-		}
+		// .logo {
+		// 	display: block;
+		// 	background-color: white;
+		// 	width: 75px;
+		// 	height: 75px;
+		// 	margin: 10px 0 0 10px;
+		// }
 	}
 		.pgNumButtonsContainer button {
 			height: 33px;
