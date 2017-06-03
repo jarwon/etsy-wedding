@@ -290,7 +290,7 @@ aside {
 	}
 	.price {
 		margin: 20px 0;
-		p:first-of-type {
+		p.priceLabel {
 			display: block;
 			margin: 5px 0;
 		}
@@ -309,6 +309,9 @@ aside {
 			width: 75px;
 			font-size: 12px;
 			padding: 5px;
+		}
+		form {
+			margin: 0;
 		}
 	}
 }

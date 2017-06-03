@@ -17,11 +17,13 @@ etsyApp.selectedPg = 1;
 etsyApp.currentPgNums = [];
 etsyApp.showLHSarrow = false;
 etsyApp.showRHSarrow = false;
+etsyApp.subCategoryListings;
 // var imageURL = "https://openapi.etsy.com/v2/listings/active.js?includes=MainImage"
 
 //initializes app
 etsyApp.init = function() {
 	etsyApp.getLocation();
+	etsyApp.getPriceRange();
 };
 
 
@@ -44,7 +46,7 @@ etsyApp.getLocation = function() {
 		});
 	});
 
-	$("input[type=submit]").on("click", function() {		
+	$(".locationSubmit").on("click", function() {		
 		etsyApp.getUserInput();
 
 		$('html, body').animate({
@@ -289,6 +291,8 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 				xmlToJSON: false
 		}
 	}).then(function(res){
+		etsyApp.subCategoryListings = res.results;
+
 		console.log('subcategory',res);
 		for (let i = 0; i < res.results.length; i++) {
 			console.log(res.results[i]);
@@ -339,12 +343,39 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 }
 
 // Get values of user's price range to narrow down listings
-// etsyApp.getPriceRange = function() {
-// 	// input id's TBD/changed based on HTML
-// 	var priceMin = $("input[id='priceMin']").val();
-// 	var priceMax = $("input[id='priceMax']").val();
-// 	// Pass price range values to ajax to narrow down listings
-// }
+etsyApp.getPriceRange = function() {
+
+	$(".priceRange").on("submit", function(e) {
+		e.preventDefault();
+
+		var priceMin = $("#minPrice").val();
+		var priceMax = $("#maxPrice").val();
+		console.log(`min price: $${priceMin}, max price: $${priceMax}`);
+		$("input[type=number]").val("");
+		
+
+		let subCategoryListings = etsyApp.subCategoryListings;
+		var listingsInPriceRange = subCategoryListings.filter(function(listing) {
+			var price = parseFloat(listing.price);
+			return price >= priceMin && price <= priceMax;
+		});
+		console.log("listings in price range", listingsInPriceRange);
+
+		$(".categoryItems").empty();
+		listingsInPriceRange.forEach(function(listing) {
+			console.log(listing);
+			$(".categoryItems").append(`
+				<div class="eachItem">
+					<a href="${listing.url}"><img src="http://via.placeholder.com/200x200"></a>
+					<h4>${listing.title}</h4>
+					<p>$${listing.price}</p>
+					<p class="itemDescription">${listing.description.substring(0,200)}...</p>	
+				</div>
+			`);
+		});
+
+	});
+}
 
 // var itemID = res.results.listing_id
 // 	$.ajax({
@@ -387,7 +418,7 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 
 
 // /listings/:listing_id/images/:listing_image_id
+
 $(function() {
 	etsyApp.init();
-	// etsyApp.getCategory();
 });
