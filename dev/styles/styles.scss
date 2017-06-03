@@ -125,7 +125,6 @@ section.home {
 }
 
 section.categories {
-	border: 1px solid red;
 	margin-top: 100px;
 	h3 {
 		@include headingFont(30px, $black);
@@ -182,9 +181,11 @@ section.categories {
 }
 
 section.listings {
-	margin: 100px 50px 100px 0px;
+	border: 1px solid red;
+	margin: 100px 0;
 	h2 {
-		color: #fff;
+		@include headingFont(40px, white);
+		text-align: left;
 	}
 	aside {
 		#formSidebar {
@@ -194,16 +195,18 @@ section.listings {
 				margin-bottom: 5px;
 			}
 			input[type=text] {
-				width: 200px;
+				width: 65%;
 				padding: 10px;
+				margin-right: 10px;
 			}
 			input[type=submit] {
-				width: 80px;
+				width: 30%;
 				padding: 10px;
 			}
 		}
-		padding: 30px;
-		width: 30%;
+		padding: 30px 15px;
+		// width: 30%;
+		width: 300px;
 		background-color: $purple;
 		float: left;
 		height: auto;
