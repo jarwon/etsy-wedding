@@ -297,16 +297,6 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 	});
 }
 
-//get results from the clicked category
-//go over each object in the array
-//append to container
-
-// https://openapi.etsy.com/v2/listings/:listing_id/images/active?api_key=wdcbm8dnlafybh8oonqlw3xr
-
-// https://openapi.etsy.com/v2/listings/:listing_id/images/active?
-// listing_id
-// wdcbm8dnlafybh8oonqlw3xr
-
 
 var itemID = res.results.listing_id
 	$.ajax({
@@ -333,6 +323,15 @@ var itemID = res.results.listing_id
 
 
 
+//get results from the clicked category
+//go over each object in the array
+//append to container
+
+// https://openapi.etsy.com/v2/listings/:listing_id/images/active?api_key=wdcbm8dnlafybh8oonqlw3xr
+
+// https://openapi.etsy.com/v2/listings/:listing_id/images/active?
+// listing_id
+// wdcbm8dnlafybh8oonqlw3xr
 
 
 
