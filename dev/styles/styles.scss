@@ -164,28 +164,105 @@ section.categories {
 		float: left;
 		text-align: center;
 		position: relative;
-		.imageContainer {
+		.hiddenBoundary {
+			height: 250px;
 			width: 250px;
+			margin: 0 auto;
+			overflow: hidden;
+			display: block;
+		}
+		.imageContainer {
+			width: 100%;
 			height: 100%;
 			text-align: center;
 			position: relative;
 			display: inline-block;
+			background-position: center;
+			background-size: cover;
+			transition: all 0.4s ease-in-out;
 		}
+
+			// before {
+			// 	transform: scale(1.15);
+			// 	content: "";
+			// 	display: block;
+			// 	height: 100%;
+			// 	width: 100%;
+			// 	position: absolute;
+			// 	top: 0;
+			// 	left: 0;
+			// 	bottom: 0;
+			// 	right: 0;
+			// 	background-color: rgba(142, 142, 142, 0.5);
+			// 	}
+		// 	&:hover {
+		// 		transform: scale(1.15);
+		// 	}
+		// }
 		.overlay {
 			height: 75px;
 			width: 250px;
 			background: linear-gradient(to bottom, #fff, $purple);
-			opacity: 0.7;
+			opacity: 0.75;
 			position: absolute;
 			bottom: 0;
 			left: 0;
 			right: 0;
+			margin: 0 auto;
 			p {
 				@include bodyFont(14px, $black)
 				text-align: center;
 				text-transform: uppercase;
 				margin-top: 25px;
 			}
+		}
+	}
+}
+
+#Accessories .imageContainer {
+	background-image: url(../../public/assets/accessories_1.jpg);
+}
+
+#Clothing .imageContainer {
+	background-image: url(../../public/assets/clothing_1.jpg);
+}
+
+#Decoration .imageContainer {
+	background-image: url(../../public/assets/decorations/1397266_10155709443060177_201621716474901513_o.jpg);
+}
+
+#Gifts .imageContainer {
+	background-image: url(../../public/assets/gift_1.jpg);
+}
+
+#Invitation .imageContainer {
+	background-image: url(../../public/assets/invitation.jpg);
+}
+
+#Jewelry .imageContainer {
+	background-image: url(../../public/assets/jewllery.jpg);
+}
+
+.imageContainer {
+
+	&:before {
+	content: "";
+	display: block;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: rgba(239, 216, 225, 0.35);
+	}
+
+	&:hover {
+		transform: scale(1.1);
+
+		&:before {
+			background-color: rgba(142, 142, 142, 0.5);
 		}
 	}
 }
@@ -262,42 +339,6 @@ section.listings {
 			font-size: 14px;
 		}
 	}
-}
-
-div#Accessories div.imageContainer {
-	background-image: url(../../public/assets/accessories_1.jpg);
-	background-position: center;
-	background-size: cover;
-}
-
-div#Clothing div.imageContainer {
-	background-image: url(../../public/assets/clothing_1.jpg);
-	background-position: center;
-	background-size: cover;
-}
-
-div#Decoration div.imageContainer {
-	background-image: url(../../public/assets/decorations/1397266_10155709443060177_201621716474901513_o.jpg);
-	background-position: center;
-	background-size: cover;
-}
-
-div#Gifts div.imageContainer {
-	background-image: url(../../public/assets/gift_1.jpg);
-	background-position: center;
-	background-size: cover;
-}
-
-div#Invitation div.imageContainer {
-	background-image: url(../../public/assets/invitation.jpg);
-	background-position: center;
-	background-size: cover;
-}
-
-div#Jewelry div.imageContainer {
-	background-image: url(../../public/assets/jewllery.jpg);
-	background-position: center;
-	background-size: cover;
 }
 
 .pgNumButtonsContainer button {
@@ -398,5 +439,5 @@ button.currentPg {
 			height: 33px;
 			width: 33px;
 			margin: 5px;
-	}
+		}
 }

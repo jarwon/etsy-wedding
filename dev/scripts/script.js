@@ -310,28 +310,28 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 }
 
 
-var itemID = res.results.listing_id
-	$.ajax({
-		url: "http://proxy.hackeryou.com",
-		method: "GET",
-		dataType: "json",
-		data: {
-			reqUrl: `https://openapi.etsy.com/v2/listings/${itemID}/images`,
-			params: {
-				api_key: etsyApp.key,
-				category: `Weddings/${cat}`,
-				tags: "Wedding",
-				lat: lat,
-				lon: lon,
-				location: userInputLocation,
-				// sort_on: "price"
-				page: currentPg
-			},
-			xmlToJSON: false
-	}
-}).then(function(res){
-	console.log(res);
-})
+// var itemID = res.results.listing_id
+// 	$.ajax({
+// 		url: "http://proxy.hackeryou.com",
+// 		method: "GET",
+// 		dataType: "json",
+// 		data: {
+// 			reqUrl: `https://openapi.etsy.com/v2/listings/${itemID}/images`,
+// 			params: {
+// 				api_key: etsyApp.key,
+// 				category: `Weddings/${cat}`,
+// 				tags: "Wedding",
+// 				lat: lat,
+// 				lon: lon,
+// 				location: userInputLocation,
+// 				// sort_on: "price"
+// 				page: currentPg
+// 			},
+// 			xmlToJSON: false
+// 	}
+// }).then(function(res){
+// 	console.log(res);
+// })
 
 
 
