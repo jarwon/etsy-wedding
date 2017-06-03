@@ -289,7 +289,7 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 					<a href="${res.results[i].url}"><img src="http://via.placeholder.com/200x200"></a>
 					<h4>${res.results[i].title}</h4>
 					<p>$${res.results[i].price}</p>
-					<p class="itemDescription">${res.results[i].description.substring(0,300)}...</p>	
+					<p class="itemDescription">${res.results[i].description.substring(0,200)}...</p>	
 				</div>
 			`);
 		};
@@ -301,7 +301,45 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 //go over each object in the array
 //append to container
 
+// https://openapi.etsy.com/v2/listings/:listing_id/images/active?api_key=wdcbm8dnlafybh8oonqlw3xr
 
+// https://openapi.etsy.com/v2/listings/:listing_id/images/active?
+// listing_id
+// wdcbm8dnlafybh8oonqlw3xr
+
+
+var itemID = res.results.listing_id
+	$.ajax({
+		url: "http://proxy.hackeryou.com",
+		method: "GET",
+		dataType: "json",
+		data: {
+			reqUrl: `https://openapi.etsy.com/v2/listings/${itemID}/images`,
+			params: {
+				api_key: etsyApp.key,
+				category: `Weddings/${cat}`,
+				tags: "Wedding",
+				lat: lat,
+				lon: lon,
+				location: userInputLocation,
+				// sort_on: "price"
+				page: currentPg
+			},
+			xmlToJSON: false
+	}
+}).then(function(res){
+	console.log(res);
+})
+
+
+
+
+
+
+//openapi.etsy.com/v2/listings/453798886/images?api_key=wdcbm8dnlafybh8oonqlw3xr
+
+
+// /listings/:listing_id/images/:listing_image_id
 $(function() {
 	etsyApp.init();
 	etsyApp.getCategory();
