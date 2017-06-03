@@ -171,9 +171,6 @@ section.categories {
 			position: relative;
 			display: inline-block;
 		}
-		img {
-			width: 100%;
-		}
 		.overlay {
 			height: 75px;
 			width: 250px;
@@ -184,7 +181,7 @@ section.categories {
 			left: 0;
 			right: 0;
 			p {
-				@include bodyFont(14px, $grey)
+				@include bodyFont(14px, $black)
 				text-align: center;
 				text-transform: uppercase;
 				margin-top: 25px;
@@ -267,7 +264,41 @@ section.listings {
 	}
 }
 
+div#Accessories div.imageContainer {
+	background-image: url(../../public/assets/accessories_1.jpg);
+	background-position: center;
+	background-size: cover;
+}
 
+div#Clothing div.imageContainer {
+	background-image: url(../../public/assets/clothing_1.jpg);
+	background-position: center;
+	background-size: cover;
+}
+
+div#Decoration div.imageContainer {
+	background-image: url(../../public/assets/decorations/1397266_10155709443060177_201621716474901513_o.jpg);
+	background-position: center;
+	background-size: cover;
+}
+
+div#Gifts div.imageContainer {
+	background-image: url(../../public/assets/gift_1.jpg);
+	background-position: center;
+	background-size: cover;
+}
+
+div#Invitation div.imageContainer {
+	background-image: url(../../public/assets/invitation.jpg);
+	background-position: center;
+	background-size: cover;
+}
+
+div#Jewelry div.imageContainer {
+	background-image: url(../../public/assets/jewllery.jpg);
+	background-position: center;
+	background-size: cover;
+}
 
 .pgNumButtonsContainer button {
 	background-color: $grey;
