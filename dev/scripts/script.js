@@ -17,7 +17,6 @@ etsyApp.selectedPg = 1;
 etsyApp.currentPgNums = [];
 etsyApp.showLHSarrow = false;
 etsyApp.showRHSarrow = false;
-// var imageURL = "https://openapi.etsy.com/v2/listings/active.js?includes=MainImage"
 
 //initializes app
 etsyApp.init = function() {
@@ -265,9 +264,10 @@ etsyApp.getPriceRange = function() {
 etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 	//bring user to category page on click
 	$(".squareCategory").on("click", function() {
-		//on click of category, get id of category and
+		//on click of category, get id of category and clear existing categoryItems div
 		$(".categoryItems").empty();
 		var	cat = $(this).attr("id");
+			//clicked category
 			console.log(cat);
 
 		$.ajax({
@@ -284,73 +284,60 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 					lon: lon,
 					location: userInputLocation,
 					// sort_on: "price"
-					page: currentPg
+					page: currentPg,
+					limit: 10
 				},
 				xmlToJSON: false
-		}
+			}
 	}).then(function(res){
-		console.log('subcategory',res);
+		
 		for (let i = 0; i < res.results.length; i++) {
-			console.log(res.results[i]);
-			$(".categoryItems").append(`
-				<div class="eachItem">
-					<a href="${res.results[i].url}"><img src="http://via.placeholder.com/200x200"></a>
-					<h4>${res.results[i].title}</h4>
-					<p>$${res.results[i].price}</p>
-					<p class="itemDescription">${res.results[i].description.substring(0,200)}...</p>	
-				</div>
-			`);
+
+			var itemListingID = res.results[i].listing_id;
+			
+				$.ajax({
+					url: "http://proxy.hackeryou.com",
+					method: "GET",
+					dataType: "json",
+					data: {
+						reqUrl: `https://openapi.etsy.com/v2/listings/${itemListingID}/images`,
+						params: {
+							api_key: etsyApp.key,
+							category: `Weddings/${cat}`,
+							tags: "Wedding",
+							lat: lat,
+							lon: lon,
+							location: userInputLocation,
+							// sort_on: "price"
+							page: currentPg,
+							limit: 10
+						},
+						xmlToJSON: false
+					}
+				}).then(function(res){
+					var itemListingImage = res.results["0"].url_570xN;
+					console.log(itemListingImage);
+
+					// $(".categoryItems").append(`
+					// 	<div class="eachItem">
+					// 		<a href="${res.results[i].url}"><img src="${itemListingImage}"></a>
+					// 		<h4>${res.results[i].title}</h4>
+					// 		<p>$${res.results[i].price}</p>
+					// 		<p class="itemDescription">${res.results[i].description.substring(0,200)}...</p>
+					// 		<p>${res.results[i].listing_id}</p>	
+					// 	</div>
+					// `);
+				});
 		};
+	});
+})
+}
 
 		$('html, body').animate({
 	         scrollTop: $("#listings").offset().top
 	    }, 1000);
-	});
-	});
-}
 
 
-// var itemID = res.results.listing_id
-// 	$.ajax({
-// 		url: "http://proxy.hackeryou.com",
-// 		method: "GET",
-// 		dataType: "json",
-// 		data: {
-// 			reqUrl: `https://openapi.etsy.com/v2/listings/${itemID}/images`,
-// 			params: {
-// 				api_key: etsyApp.key,
-// 				category: `Weddings/${cat}`,
-// 				tags: "Wedding",
-// 				lat: lat,
-// 				lon: lon,
-// 				location: userInputLocation,
-// 				// sort_on: "price"
-// 				page: currentPg
-// 			},
-// 			xmlToJSON: false
-// 	}
-// }).then(function(res){
-// 	console.log(res);
-// })
-
-
-
-//get results from the clicked category
-//go over each object in the array
-//append to container
-
-// https://openapi.etsy.com/v2/listings/:listing_id/images/active?api_key=wdcbm8dnlafybh8oonqlw3xr
-
-// https://openapi.etsy.com/v2/listings/:listing_id/images/active?
-// listing_id
-// wdcbm8dnlafybh8oonqlw3xr
-
-
-
-//openapi.etsy.com/v2/listings/453798886/images?api_key=wdcbm8dnlafybh8oonqlw3xr
-
-
-// /listings/:listing_id/images/:listing_image_id
 $(function() {
 	etsyApp.init();
 	etsyApp.getCategory();

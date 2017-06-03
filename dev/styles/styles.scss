@@ -243,6 +243,9 @@ section.listings {
 		p {
 			font-size: 14px;
 		}
+		img {
+			width: 100%;
+		}
 	}
 	position: relative;
 }
@@ -270,7 +273,7 @@ aside {
 	}
 	padding: 30px 15px;
 	// width: 30%;
-	position: fixed;
+	// position: fixed;
 	top: 0;
 	left: 0;
 	width: 300px;
