@@ -24,7 +24,7 @@
 				<form action="#" id="form" class="clearfix">
 					<label for="location">Enter your location:</label>
 					<input type="text" id="location">
-					<input type="submit">
+					<input type="submit" class="locationSubmit">
 					
 					<p>or</p>
 
@@ -114,12 +114,13 @@
 			</ul>
 
 			<div class="price">
-				<p>price range:</p>
-				<p>$</p><input type="number" id="minPrice" min="0">
-				<p>to</p>
-				<p>$</p><input type="number" id="maxPrice" min="0">
-				<input type="submit">
-
+				<p class="priceLabel">price range:</p>
+				<form action="" class="priceRange">
+					<p>$</p><input type="number" id="minPrice" min="0">
+					<p>to</p>
+					<p>$</p><input type="number" id="maxPrice" min="0">
+					<input type="submit">
+				</form>
 			</div>
 		</aside>
 		<div class="categoryItems">
