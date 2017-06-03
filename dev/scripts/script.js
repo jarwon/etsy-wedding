@@ -18,7 +18,6 @@ etsyApp.currentPgNums = [];
 etsyApp.showLHSarrow = false;
 etsyApp.showRHSarrow = false;
 etsyApp.subCategoryListings;
-// var imageURL = "https://openapi.etsy.com/v2/listings/active.js?includes=MainImage"
 
 //initializes app
 etsyApp.init = function() {
@@ -152,7 +151,7 @@ var clearExisting = function () {
 var chkPgNums = function(totPgs) {
 	if (totPgs <=5 ) {
 		for (var i = 1 ; i <= totPgs ; i = i + 1) {
-			console.log("first");
+			// console.log("first");
 			var pushNum = i;
 			// make an array of the total page numbers
 			etsyApp.currentPgNums.push(pushNum);
@@ -184,7 +183,7 @@ var genPgNumOptionsDisplay = function(currentNum, totPgs) {
 	// if any other pg number is selected
 	} else {
 		for (var i = -2 ; i < 3 ; i = i + 1) {
-			console.log("current num", currentNum, i, currentNum + i)
+			// console.log("current num", currentNum, i, currentNum + i)
 			var pushNum = currentNum + i;
 			// make an array of the total page numbers, both LHS and RHS arrows will exist
 			etsyApp.currentPgNums.push(pushNum);
@@ -225,8 +224,8 @@ var createScreenButtons = function(pgNumArray) {
 	for (var i = 0; i < pgNumArray.length; i = i + 1) {
 		let theButtonNum = pgNumArray[i];
 
-		console.log('selected pg', etsyApp.selectedPg);
-		console.log('button num', pgNumArray[i]);
+		// console.log('selected pg', etsyApp.selectedPg);
+		// console.log('button num', pgNumArray[i]);
 
 		if ( pgNumArray[i] === etsyApp.selectedPg) {
 			var pgButton = $("<button>").addClass("pgButton currentPg").text(theButtonNum);
@@ -267,10 +266,11 @@ var createScreenButtons = function(pgNumArray) {
 etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 	//bring user to category page on click
 	$(".squareCategory").on("click", function() {
-		//on click of category, get id of category and
+		//on click of category, get id of category and clear existing categoryItems div
 		$(".categoryItems").empty();
 		var	cat = $(this).attr("id");
-		console.log(cat);
+			//clicked category
+			console.log(cat);
 
 		$.ajax({
 			url: "http://proxy.hackeryou.com",
@@ -286,61 +286,86 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 					lon: lon,
 					location: userInputLocation,
 					// sort_on: "price"
-					page: currentPg
+					page: currentPg,
+					limit: 10
 				},
 				xmlToJSON: false
-		}
-	}).then(function(res){
-		etsyApp.subCategoryListings = res.results;
+			}
+		}).then(function(res){
+			etsyApp.subCategoryListings = res.results;
+			for (let i = 0; i < res.results.length; i++) {
+				var itemListingID = res.results[i].listing_id;
+			
+				$.ajax({
+					url: "http://proxy.hackeryou.com",
+					method: "GET",
+					dataType: "json",
+					data: {
+						reqUrl: `https://openapi.etsy.com/v2/listings/${itemListingID}/images`,
+						params: {
+							api_key: etsyApp.key,
+							category: `Weddings/${cat}`,
+							tags: "Wedding",
+							lat: lat,
+							lon: lon,
+							location: userInputLocation,
+							// sort_on: "price"
+							page: currentPg,
+							limit: 10
+						},
+						xmlToJSON: false
+					}
+				}).then(function(res){
+					var itemListingImage = res.results["0"].url_570xN;
+					console.log(itemListingImage);
 
-		console.log('subcategory',res);
-		for (let i = 0; i < res.results.length; i++) {
-			console.log(res.results[i]);
-			$(".categoryItems").append(`
-				<div class="eachItem">
-					<a href="${res.results[i].url}"><img src="http://via.placeholder.com/200x200"></a>
-					<h4>${res.results[i].title}</h4>
-					<p>$${res.results[i].price}</p>
-					<p class="itemDescription">${res.results[i].description.substring(0,200)}...</p>	
-				</div>
-			`);
-			$(".currentlyViewing").text(cat);
-		};
+					// $(".categoryItems").append(`
+					// 	<div class="eachItem">
+					// 		<a href="${res.results[i].url}"><img src="${itemListingImage}"></a>
+					// 		<h4>${res.results[i].title}</h4>
+					// 		<p>$${res.results[i].price}</p>
+					// 		<p class="itemDescription">${res.results[i].description.substring(0,200)}...</p>
+					// 		<p>${res.results[i].listing_id}</p>	
+					// 	</div>
+					// `);
+						$(".currentlyViewing").text(cat);
+				});
+
+				console.log(res);
+				// quantity of search results
+				var totNumOfHits = res.count;
+				// number of search results per page
+				var totNumOfHitsPerPg = res.params.limit;
+				// if quantity of search results goes evenly into number of search results per pg
+				if (totNumOfHits % totNumOfHitsPerPg === 0) {
+					var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
+				}
+				// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
+				// use math.floor to avoid decimal place results/round up. 
+				else {
+					var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
+				}
+
+				// clear any existing related buttons, arrows and pgNum arrays
+				clearExisting();
+
+				// console.log("****", etsyApp.currentPgNums);
+				// call check page numbers function
+				chkPgNums(totNumOfPgs);
 
 
-		console.log(res);
-		// quantity of search results
-		var totNumOfHits = res.count;
-		// number of search results per page
-		var totNumOfHitsPerPg = res.params.limit;
-		// if quantity of search results goes evenly into number of search results per pg
-		if (totNumOfHits % totNumOfHitsPerPg === 0) {
-			var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
-		}
-		// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
-		// use math.floor to avoid decimal place results/round up. 
-		else {
-			var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
-		}
-
-		// clear any existing related buttons, arrows and pgNum arrays
-		clearExisting();
-
-		// console.log("****", etsyApp.currentPgNums);
-		// call check page numbers function
-		chkPgNums(totNumOfPgs);
-
-
-
-		$('html, body').animate({
-	         scrollTop: $("#listings").offset().top
-	    }, 1000);
-
+				$('html, body').animate({
+			         scrollTop: $("#listings").offset().top
+			    }, 1000);
 		
-		// $("aside").css("position", "fixed");
-	});
+				// $("aside").css("position", "fixed");
+			}
+		});
 	});
 }
+
+
+
 
 // Get values of user's price range to narrow down listings
 etsyApp.getPriceRange = function() {
@@ -401,23 +426,6 @@ etsyApp.getPriceRange = function() {
 // })
 
 
-
-//get results from the clicked category
-//go over each object in the array
-//append to container
-
-// https://openapi.etsy.com/v2/listings/:listing_id/images/active?api_key=wdcbm8dnlafybh8oonqlw3xr
-
-// https://openapi.etsy.com/v2/listings/:listing_id/images/active?
-// listing_id
-// wdcbm8dnlafybh8oonqlw3xr
-
-
-
-//openapi.etsy.com/v2/listings/453798886/images?api_key=wdcbm8dnlafybh8oonqlw3xr
-
-
-// /listings/:listing_id/images/:listing_image_id
 
 $(function() {
 	etsyApp.init();
