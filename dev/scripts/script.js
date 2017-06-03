@@ -62,8 +62,11 @@ etsyApp.userLocation = function(userPosition){
 	etsyApp.userInputLocation = null;
 	console.log(etsyApp.lat, etsyApp.lon);
 
+
+	etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
+
 	// Run ajax request function only after you have the user's location
-	etsyApp.getLocalListings(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
+	// etsyApp.getLocalListings(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
 };
 
 
@@ -78,56 +81,59 @@ etsyApp.getUserInput = function() {
 		etsyApp.lat = undefined;
 		etsyApp.lon = undefined;
 
+
+		etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
+
 		// Run ajax request function only after you have the user's location
-		etsyApp.getLocalListings(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
+		// etsyApp.getLocalListings(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
 	});
 };
 
 
 // Get etsy listings based on user location (either latitude & longitude coordinates from geolocation OR from location text input if user denied access to geolocation)
-etsyApp.getLocalListings = function(lat, lon, userInputLocation, currentPg) {
+// etsyApp.getLocalListings = function(lat, lon, userInputLocation, currentPg) {
 	
-	$.ajax({
-		url: "http://proxy.hackeryou.com",
-		method: "GET",
-		dataType: "json",
-		data: {
-			reqUrl: "https://openapi.etsy.com/v2/listings/active",
-			params: {
-				api_key: etsyApp.key,
-				category: "weddings",
-				lat: lat,
-				lon: lon,
-				location: userInputLocation,
-				// sort_on: "price"
-				page: currentPg
-			},
-			xmlToJSON: false
-		}
-	}).then(function(res) {
-		console.log(res);
-		// quantity of search results
-		var totNumOfHits = res.count;
-		// number of search results per page
-		var totNumOfHitsPerPg = res.params.limit;
-		// if quantity of search results goes evenly into number of search results per pg
-		if (totNumOfHits % totNumOfHitsPerPg === 0) {
-			var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
-		}
-		// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
-		// use math.floor to avoid decimal place results/round up. 
-		else {
-			var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
-		}
+// 	$.ajax({
+// 		url: "http://proxy.hackeryou.com",
+// 		method: "GET",
+// 		dataType: "json",
+// 		data: {
+// 			reqUrl: "https://openapi.etsy.com/v2/listings/active",
+// 			params: {
+// 				api_key: etsyApp.key,
+// 				category: "weddings",
+// 				lat: lat,
+// 				lon: lon,
+// 				location: userInputLocation,
+// 				// sort_on: "price"
+// 				page: currentPg
+// 			},
+// 			xmlToJSON: false
+// 		}
+// 	}).then(function(res) {
+// 		console.log(res);
+// 		// quantity of search results
+// 		var totNumOfHits = res.count;
+// 		// number of search results per page
+// 		var totNumOfHitsPerPg = res.params.limit;
+// 		// if quantity of search results goes evenly into number of search results per pg
+// 		if (totNumOfHits % totNumOfHitsPerPg === 0) {
+// 			var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
+// 		}
+// 		// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
+// 		// use math.floor to avoid decimal place results/round up. 
+// 		else {
+// 			var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
+// 		}
 
-		// clear any existing related buttons, arrows and pgNum arrays
-		clearExisting();
+// 		// clear any existing related buttons, arrows and pgNum arrays
+// 		clearExisting();
 
-		// console.log("****", etsyApp.currentPgNums);
-		// call check page numbers function
-		chkPgNums(totNumOfPgs);
-	});
-}
+// 		// console.log("****", etsyApp.currentPgNums);
+// 		// call check page numbers function
+// 		chkPgNums(totNumOfPgs);
+// 	});
+// }
 
 // clear any existing related buttons, arrows and pgNum arrays
 var clearExisting = function () {
@@ -155,7 +161,7 @@ var chkPgNums = function(totPgs) {
 		// console.log("second", etsyApp.selectedPg, totPgs);
 		// if there are more than 5 pages call function to determin which pg numbers to display (what numbers to fill etsyApp.currentPgNums with)
 		genPgNumOptionsDisplay(etsyApp.selectedPg, totPgs);
-		}
+	}
 }
 
 var genPgNumOptionsDisplay = function(currentNum, totPgs) {
@@ -205,7 +211,7 @@ var createScreenButtons = function(pgNumArray) {
 		 // call new ajax request for prev pg hits
 		leftArrowButton.on('click', function() {
 			etsyApp.selectedPg = pgNumArray[1];
-			etsyApp.getLocalListings(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, pgNumArray[1]);
+			etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, pgNumArray[1]);
 		});
 
 		$(".pgNumButtonsContainer").append(leftArrowButton);
@@ -232,7 +238,7 @@ var createScreenButtons = function(pgNumArray) {
 		pgButton.on('click', function() {
 			etsyApp.selectedPg = theButtonNum;
 			// console.log("x", pgNumArray[i]);
-			etsyApp.getLocalListings(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, theButtonNum);
+			etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, theButtonNum);
 		});
 
 		$(".pgNumButtonsContainer").append(pgButton);
@@ -246,29 +252,23 @@ var createScreenButtons = function(pgNumArray) {
 			 // call new ajax request for next pg hits
 		rightArrowButton.on('click', function() {
 			etsyApp.selectedPg = pgNumArray[3];
-			etsyApp.getLocalListings(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, pgNumArray[3]);
+			etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, pgNumArray[3]);
 		});
 		$(".pgNumButtonsContainer").append(rightArrowButton);
 	}
 }
 
 
-// Get values of user's price range to narrow down listings
-etsyApp.getPriceRange = function() {
-	// input id's TBD/changed based on HTML
-	var priceMin = $("input[id='priceMin']").val();
-	var priceMax = $("input[id='priceMax']").val();
-	// Pass price range values to ajax to narrow down listings
-}
 
 
+// Get local etsy listings based on the chosen category
 etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 	//bring user to category page on click
 	$(".squareCategory").on("click", function() {
 		//on click of category, get id of category and
 		$(".categoryItems").empty();
 		var	cat = $(this).attr("id");
-			console.log(cat);
+		console.log(cat);
 
 		$.ajax({
 			url: "http://proxy.hackeryou.com",
@@ -300,15 +300,51 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 					<p class="itemDescription">${res.results[i].description.substring(0,200)}...</p>	
 				</div>
 			`);
+			$(".currentlyViewing").text(cat);
 		};
+
+
+		console.log(res);
+		// quantity of search results
+		var totNumOfHits = res.count;
+		// number of search results per page
+		var totNumOfHitsPerPg = res.params.limit;
+		// if quantity of search results goes evenly into number of search results per pg
+		if (totNumOfHits % totNumOfHitsPerPg === 0) {
+			var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
+		}
+		// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
+		// use math.floor to avoid decimal place results/round up. 
+		else {
+			var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
+		}
+
+		// clear any existing related buttons, arrows and pgNum arrays
+		clearExisting();
+
+		// console.log("****", etsyApp.currentPgNums);
+		// call check page numbers function
+		chkPgNums(totNumOfPgs);
+
+
 
 		$('html, body').animate({
 	         scrollTop: $("#listings").offset().top
 	    }, 1000);
+
+		
+		// $("aside").css("position", "fixed");
 	});
 	});
 }
 
+// Get values of user's price range to narrow down listings
+// etsyApp.getPriceRange = function() {
+// 	// input id's TBD/changed based on HTML
+// 	var priceMin = $("input[id='priceMin']").val();
+// 	var priceMax = $("input[id='priceMax']").val();
+// 	// Pass price range values to ajax to narrow down listings
+// }
 
 // var itemID = res.results.listing_id
 // 	$.ajax({
@@ -353,5 +389,5 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 // /listings/:listing_id/images/:listing_image_id
 $(function() {
 	etsyApp.init();
-	etsyApp.getCategory();
+	// etsyApp.getCategory();
 });
