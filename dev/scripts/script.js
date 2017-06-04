@@ -1,11 +1,3 @@
-// pseudocode:
-// After user inputs their location, show different wedding product categories and have the user select which category of wedding products they want to look at - store that in a category variable
-// Plug in the location variable and category variable to the ajax request to get listings of wedding products from etsy in their location
-// Display those listings to the page & subcategories list to allow them to further narrow down product listings if they wish
-// If user chooses a subcategory, filter results to show only products in the chosen subcategory
-// ? Provide option to sort listings by: distance, price, etc.
-// If user clicks on a listing, it will bring them to the corresponding etsy listing page
-
 const etsyApp = {};
 
 //global variables 
@@ -36,6 +28,7 @@ etsyApp.getLocation = function() {
 			console.log("location access allowed");
 			etsyApp.userLocation(userPosition);
 
+			$("section.categories").css("display", "block");
 			$('html, body').animate({
 		         scrollTop: $("#categories").offset().top
 		    }, 1000);
@@ -48,6 +41,7 @@ etsyApp.getLocation = function() {
 	$(".locationSubmit").on("click", function() {		
 		etsyApp.getUserInput();
 
+		$("section.categories").css("display", "block");
 		$('html, body').animate({
 	         scrollTop: $("#categories").offset().top
 	    }, 1000);
@@ -354,6 +348,7 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 				chkPgNums(totNumOfPgs);
 
 
+				$("section.listings").css("display", "block");
 				$('html, body').animate({
 			         scrollTop: $("#listings").offset().top
 			    }, 1000);
@@ -401,29 +396,6 @@ etsyApp.getPriceRange = function() {
 
 	});
 }
-
-// var itemID = res.results.listing_id
-// 	$.ajax({
-// 		url: "http://proxy.hackeryou.com",
-// 		method: "GET",
-// 		dataType: "json",
-// 		data: {
-// 			reqUrl: `https://openapi.etsy.com/v2/listings/${itemID}/images`,
-// 			params: {
-// 				api_key: etsyApp.key,
-// 				category: `Weddings/${cat}`,
-// 				tags: "Wedding",
-// 				lat: lat,
-// 				lon: lon,
-// 				location: userInputLocation,
-// 				// sort_on: "price"
-// 				page: currentPg
-// 			},
-// 			xmlToJSON: false
-// 	}
-// }).then(function(res){
-// 	console.log(res);
-// })
 
 
 

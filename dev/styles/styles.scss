@@ -156,6 +156,7 @@ section.home {
 }
 
 section.categories {
+	display: none;
 	.grid {
 		max-width: 1000px;
 		margin: 0 auto;
@@ -187,24 +188,6 @@ section.categories {
 			background-size: cover;
 			transition: all 0.4s ease-in-out;
 		}
-
-			// before {
-			// 	transform: scale(1.15);
-			// 	content: "";
-			// 	display: block;
-			// 	height: 100%;
-			// 	width: 100%;
-			// 	position: absolute;
-			// 	top: 0;
-			// 	left: 0;
-			// 	bottom: 0;
-			// 	right: 0;
-			// 	background-color: rgba(142, 142, 142, 0.5);
-			// 	}
-		// 	&:hover {
-		// 		transform: scale(1.15);
-		// 	}
-		// }
 		.overlay {
 			height: 75px;
 			width: 250px;
@@ -227,8 +210,8 @@ section.categories {
 
 
 section.listings {
-	border: 1px solid red;
-	margin: 100px 0;
+	display: none;
+	margin-top: 100px;
 	h2 {
 		@include headingFont(40px, white);
 		text-align: left;
@@ -319,7 +302,6 @@ aside {
 }
 
 .categoryItems {
-	border: 1px solid blue;
 	width: calc(100% - 300px);
 	position: absolute;
 	top: 0;
