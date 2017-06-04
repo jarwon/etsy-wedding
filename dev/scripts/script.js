@@ -15,14 +15,16 @@ etsyApp.cat = "";
 //initializes app
 etsyApp.init = function() {
 	etsyApp.getLocation();
-	etsyApp.getPriceRange();
+	// etsyApp.getPriceRange();
+	// etsyApp.changeLocation();
 };
 
 
 // Landing page: Get user's location either by device's navigator geolocation if access allowed OR from user's location text input if they deny access to navigator geolocation
 etsyApp.getLocation = function() {
 	
-	$("button.findGeolocation").on("click", function() {
+	$("button.findGeolocation").on("click", function(e) {
+		e.preventDefault();
 
 		navigator.geolocation.getCurrentPosition(function(userPosition) {
 		// If user allows access to navigator geolocation, then run ajax request using their longitude & latitude coordinates
@@ -357,7 +359,6 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 							<a href="${etsyApp.subCategoryListings[i].url}"><img src="${itemListingImage}"></a>
 							<h4>${etsyApp.subCategoryListings[i].title}</h4>
 							<p>$${etsyApp.subCategoryListings[i].price}</p>
-							<p class="itemDescription">${etsyApp.subCategoryListings[i].description.substring(0,100)}...</p>
 						</div>
 					`);
 						$(".currentlyViewing").text(etsyApp.cat);
@@ -395,7 +396,33 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 			    }, 1000);
 		
 				// $("aside").css("position", "fixed");
+
 			}
+
+			// clear any existing related buttons, arrows and pgNum arrays
+			clearExisting();
+
+			// console.log("****", etsyApp.currentPgNums);
+			// call check page numbers function
+			chkPgNums(totNumOfPgs);
+
+			$("section.listings").css("display", "block");
+			$('html, body').animate({
+		         scrollTop: $("#listings").offset().top
+		    }, 1000);
+
+		    var homeHeight = $("section.home").outerHeight();
+		    var categoriesHeight = $("section.categories").outerHeight();
+		    $(window).on("scroll", function() {
+		    	if ($(window).scrollTop() >= (homeHeight + categoriesHeight)) {
+		    		$("aside").css("position", "fixed");
+		    	} else {
+		    		$("aside").css("position", "static");
+		    	}
+		    });
+
+		    etsyApp.getPriceRange();
+		    // etsyApp.changeLocation();
 		});
 }
 
@@ -428,14 +455,32 @@ etsyApp.getPriceRange = function() {
 				<div class="eachItem">
 					<a href="${listing.url}"><img src="http://via.placeholder.com/200x200"></a>
 					<h4>${listing.title}</h4>
-					<p>$${listing.price}</p>
-					<p class="itemDescription">${listing.description.substring(0,200)}...</p>	
+					<p>$${listing.price}</p>	
 				</div>
 			`);
 		});
 
 	});
 }
+
+
+// Change location sidebar form
+etsyApp.changeLocation = function() {
+	$("#formSidebar").on("submit", function(e) {
+		console.log("new location");
+		e.preventDefault();
+
+		etsyApp.userInputLocation = $("input[id='location']").val();
+		$("input[id='location']").val("");
+		console.log(etsyApp.userInputLocation);
+		etsyApp.lat = undefined;
+		etsyApp.lon = undefined;
+
+
+		etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
+	});
+}
+
 
 $(function() {
 	etsyApp.init();
