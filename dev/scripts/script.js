@@ -262,7 +262,7 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 					location: userInputLocation,
 					// sort_on: "price"
 					page: currentPg,
-					limit: 10
+					limit: 9
 				},
 				xmlToJSON: false
 			}
@@ -288,7 +288,7 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 							location: userInputLocation,
 							// sort_on: "price"
 							page: currentPg,
-							limit: 10
+							limit: 9
 						},
 						xmlToJSON: false
 					}
@@ -363,16 +363,13 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 		    var homeHeight = $("section.home").outerHeight();
 		    var categoriesHeight = $("section.categories").outerHeight();
 		    $(window).on("scroll", function() {
-		    	if ($(window).scrollTop() >= (homeHeight + categoriesHeight)) {
+		    	if (screen.width <= 768) {
+                    $("aside").css("position", "static");
+                } else if ($(window).scrollTop() >= (homeHeight + categoriesHeight)) {
 		    		$("aside").css("position", "fixed");
 		    	} else {
 		    		$("aside").css("position", "static");
 		    	} 
-
-		    	if (screen.width < 768) {
-                    $("aside").css("position", "static");
-                }
-
 		    });
 
 		    etsyApp.getPriceRange();

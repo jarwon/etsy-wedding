@@ -307,10 +307,10 @@ aside {
 	position: absolute;
 	top: 0;
 	right: 0;
+	text-align: center;
 	.categoryItems {
 		display: block;
 	}
-	text-align: center;
 }
 
 .nav {
@@ -451,7 +451,6 @@ button.currentPg {
 	}
 	aside {
 		display: none;
-		position: static;
 	}
 	section.listings {
 		.categoryItems {
