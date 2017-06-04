@@ -316,18 +316,18 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 						xmlToJSON: false
 					}
 				}).then(function(res){
-					var itemListingImage = res.results["0"].url_570xN;
+					var itemListingImage = res.results[i].url_570xN;
 					console.log(itemListingImage);
 
-					// $(".categoryItems").append(`
-					// 	<div class="eachItem">
-					// 		<a href="${res.results[i].url}"><img src="${itemListingImage}"></a>
-					// 		<h4>${res.results[i].title}</h4>
-					// 		<p>$${res.results[i].price}</p>
-					// 		<p class="itemDescription">${res.results[i].description.substring(0,200)}...</p>
-					// 		<p>${res.results[i].listing_id}</p>	
-					// 	</div>
-					// `);
+					$(".categoryItems").append(`
+						<div class="eachItem">
+							<a href="${etsyApp.subCategoryListings[i].url}"><img src="${itemListingImage}"></a>
+							<h4>${etsyApp.subCategoryListings[i].title}</h4>
+							<p>$${etsyApp.subCategoryListings[i].price}</p>
+							<p class="itemDescription">${etsyApp.subCategoryListings[i].description.substring(0,100)}...</p>
+							<p>${res.results[i].listing_id}</p>	
+						</div>
+					`);
 						$(".currentlyViewing").text(cat);
 				});
 
