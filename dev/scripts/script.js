@@ -14,14 +14,16 @@ etsyApp.subCategoryListings;
 //initializes app
 etsyApp.init = function() {
 	etsyApp.getLocation();
-	etsyApp.getPriceRange();
+	// etsyApp.getPriceRange();
+	// etsyApp.changeLocation();
 };
 
 
 // Landing page: Get user's location either by device's navigator geolocation if access allowed OR from user's location text input if they deny access to navigator geolocation
 etsyApp.getLocation = function() {
 	
-	$("button.findGeolocation").on("click", function() {
+	$("button.findGeolocation").on("click", function(e) {
+		e.preventDefault();
 
 		navigator.geolocation.getCurrentPosition(function(userPosition) {
 		// If user allows access to navigator geolocation, then run ajax request using their longitude & latitude coordinates
@@ -330,37 +332,47 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 					`);
 						$(".currentlyViewing").text(cat);
 				});
+			} // end of images for loop
 
-				// console.log(res);
-				// quantity of search results
-				var totNumOfHits = listings.count;
-				// number of search results per page
-				var totNumOfHitsPerPg = listings.params.limit;
-				// if quantity of search results goes evenly into number of search results per pg
-				if (totNumOfHits % totNumOfHitsPerPg === 0) {
-					var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
-				}
-				// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
-				// use math.floor to avoid decimal place results/round up. 
-				else {
-					var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
-				}
-
-				// clear any existing related buttons, arrows and pgNum arrays
-				clearExisting();
-
-				// console.log("****", etsyApp.currentPgNums);
-				// call check page numbers function
-				chkPgNums(totNumOfPgs);
-
-
-				$("section.listings").css("display", "block");
-				$('html, body').animate({
-			         scrollTop: $("#listings").offset().top
-			    }, 1000);
-		
-				// $("aside").css("position", "fixed");
+			// console.log(res);
+			// quantity of search results
+			var totNumOfHits = listings.count;
+			// number of search results per page
+			var totNumOfHitsPerPg = listings.params.limit;
+			// if quantity of search results goes evenly into number of search results per pg
+			if (totNumOfHits % totNumOfHitsPerPg === 0) {
+				var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
 			}
+			// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
+			// use math.floor to avoid decimal place results/round up. 
+			else {
+				var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
+			}
+
+			// clear any existing related buttons, arrows and pgNum arrays
+			clearExisting();
+
+			// console.log("****", etsyApp.currentPgNums);
+			// call check page numbers function
+			chkPgNums(totNumOfPgs);
+
+			$("section.listings").css("display", "block");
+			$('html, body').animate({
+		         scrollTop: $("#listings").offset().top
+		    }, 1000);
+
+		    var homeHeight = $("section.home").outerHeight();
+		    var categoriesHeight = $("section.categories").outerHeight();
+		    $(window).on("scroll", function() {
+		    	if ($(window).scrollTop() >= (homeHeight + categoriesHeight)) {
+		    		$("aside").css("position", "fixed");
+		    	} else {
+		    		$("aside").css("position", "static");
+		    	}
+		    });
+
+		    etsyApp.getPriceRange();
+		    // etsyApp.changeLocation();
 		});
 	});
 }
@@ -402,6 +414,25 @@ etsyApp.getPriceRange = function() {
 
 	});
 }
+
+
+// Change location sidebar form
+etsyApp.changeLocation = function() {
+	$("#formSidebar").on("submit", function(e) {
+		console.log("new location");
+		e.preventDefault();
+
+		etsyApp.userInputLocation = $("input[id='location']").val();
+		$("input[id='location']").val("");
+		console.log(etsyApp.userInputLocation);
+		etsyApp.lat = undefined;
+		etsyApp.lon = undefined;
+
+
+		etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
+	});
+}
+
 
 $(function() {
 	etsyApp.init();

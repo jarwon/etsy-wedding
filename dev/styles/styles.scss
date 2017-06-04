@@ -303,11 +303,14 @@ aside {
 	}
 }
 
-.categoryItems {
+.listingsContent {
 	width: calc(100% - 300px);
 	position: absolute;
 	top: 0;
 	right: 0;
+	.categoryItems {
+		display: block;
+	}
 }
 
 
@@ -357,6 +360,11 @@ aside {
 			background-color: rgba(142, 142, 142, 0.5);
 		}
 	}
+}
+
+.pgNumButtonsContainer {
+	display: block;
+	text-align: center;
 }
 
 .pgNumButtonsContainer button {
