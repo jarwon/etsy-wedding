@@ -10,12 +10,13 @@ etsyApp.currentPgNums = [];
 etsyApp.showLHSarrow = false;
 etsyApp.showRHSarrow = false;
 etsyApp.subCategoryListings;
+etsyApp.cat = "";
 
 //initializes app
 etsyApp.init = function() {
 	etsyApp.getLocation();
 	// etsyApp.getPriceRange();
-	// etsyApp.changeLocation();
+	etsyApp.changeLocation();
 };
 
 
@@ -59,11 +60,7 @@ etsyApp.userLocation = function(userPosition){
 	etsyApp.userInputLocation = null;
 	console.log(etsyApp.lat, etsyApp.lon);
 
-
-	etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
-
-	// Run ajax request function only after you have the user's location
-	// etsyApp.getLocalListings(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
+  	etsyApp.catClickListener();
 };
 
 
@@ -78,59 +75,24 @@ etsyApp.getUserInput = function() {
 		etsyApp.lat = undefined;
 		etsyApp.lon = undefined;
 
-
-		etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
-
-		// Run ajax request function only after you have the user's location
-		// etsyApp.getLocalListings(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
+	    etsyApp.catClickListener();
 	});
 };
 
-
-// Get etsy listings based on user location (either latitude & longitude coordinates from geolocation OR from location text input if user denied access to geolocation)
-// etsyApp.getLocalListings = function(lat, lon, userInputLocation, currentPg) {
+// user selects subcatagory, AJAX function is called to obtain results of selection
+etsyApp.catClickListener = function() {
+	//bring user to category page on click
+	$(".squareCategory").on("click", function() {
+		//on click of category, get id of category and clear existing categoryItems div
+		$(".categoryItems").empty();
+		etsyApp.cat = $(this).attr("id");
+			//clicked category
+			console.log(etsyApp.cat);
+	etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.selectedPg);
 	
-// 	$.ajax({
-// 		url: "http://proxy.hackeryou.com",
-// 		method: "GET",
-// 		dataType: "json",
-// 		data: {
-// 			reqUrl: "https://openapi.etsy.com/v2/listings/active",
-// 			params: {
-// 				api_key: etsyApp.key,
-// 				category: "weddings",
-// 				lat: lat,
-// 				lon: lon,
-// 				location: userInputLocation,
-// 				// sort_on: "price"
-// 				page: currentPg
-// 			},
-// 			xmlToJSON: false
-// 		}
-// 	}).then(function(res) {
-// 		console.log(res);
-// 		// quantity of search results
-// 		var totNumOfHits = res.count;
-// 		// number of search results per page
-// 		var totNumOfHitsPerPg = res.params.limit;
-// 		// if quantity of search results goes evenly into number of search results per pg
-// 		if (totNumOfHits % totNumOfHitsPerPg === 0) {
-// 			var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
-// 		}
-// 		// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
-// 		// use math.floor to avoid decimal place results/round up. 
-// 		else {
-// 			var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
-// 		}
+	});	
+}
 
-// 		// clear any existing related buttons, arrows and pgNum arrays
-// 		clearExisting();
-
-// 		// console.log("****", etsyApp.currentPgNums);
-// 		// call check page numbers function
-// 		chkPgNums(totNumOfPgs);
-// 	});
-// }
 
 // clear any existing related buttons, arrows and pgNum arrays
 var clearExisting = function () {
@@ -155,29 +117,50 @@ var chkPgNums = function(totPgs) {
 			createScreenButtons(etsyApp.currentPgNums);
 		} 
 	} else {
-		// console.log("second", etsyApp.selectedPg, totPgs);
+		console.log("second", etsyApp.selectedPg, totPgs);
 		// if there are more than 5 pages call function to determin which pg numbers to display (what numbers to fill etsyApp.currentPgNums with)
 		genPgNumOptionsDisplay(etsyApp.selectedPg, totPgs);
 	}
 }
 
 var genPgNumOptionsDisplay = function(currentNum, totPgs) {
+	console.log('made it to gen pg num display options');
 	// if either of first three pages are selected
 	if (currentNum === 1 || currentNum === 2 || currentNum === 3) {
+		console.log('made it to pg 1 of button options');
 		// make an array of the total page numbers, RHS arrow will exist, no LHS (default LHS)
 		etsyApp.currentPgNums = [1, 2, 3, 4, 5];
 		etsyApp.showRHSarrow = true;
 	}
-	// if either of last three pages are selected
-	else if (currentNum === totPgs || currentNum === totPgs - 1 || currentNum === totPgs - 2) {
+	// if last page is selected
+	else if (currentNum === totPgs) {
 		for (var i = 4 ; i >= 0 ; i = i - 1) {
 			var pushNum = totPgs - i;
 			// make an array of the total page numbers, LHS arrow will exist, no RHS (default RHS)
 			etsyApp.currentPgNums.push(pushNum);
 			etsyApp.showLHSarrow = true;
 		}
+	}
+	//if second last page is selected
+	else if (currentNum === totPgs - 1) {
+		for (var i = 3 ; i >= -1 ; i = i - 1) {
+			var pushNum = totPgs - i;
+			// make an array of the total page numbers, LHS arrow will exist, no RHS (default RHS)
+			etsyApp.currentPgNums.push(pushNum);
+			etsyApp.showLHSarrow = true;
+		}
+	}
+	//if third last page is selected
+	else if (currentNum === totPgs - 2) {
+		for (var i = 2 ; i >= -2 ; i = i - 1) {
+			var pushNum = totPgs - i;
+			// make an array of the total page numbers, LHS arrow will exist, no RHS (default RHS)
+			etsyApp.currentPgNums.push(pushNum);
+			etsyApp.showLHSarrow = true;
+		}
+	}
 	// if any other pg number is selected
-	} else {
+	else {
 		for (var i = -2 ; i < 3 ; i = i + 1) {
 			// console.log("current num", currentNum, i, currentNum + i)
 			var pushNum = currentNum + i;
@@ -188,7 +171,7 @@ var genPgNumOptionsDisplay = function(currentNum, totPgs) {
 		}
 	};
 
-	// console.log(">", etsyApp.currentPgNums);
+	console.log("about to call create Screen Buttons", etsyApp.currentPgNums);
 	// call create screen buttons with array as parameter
 	createScreenButtons(etsyApp.currentPgNums);
 }
@@ -197,7 +180,7 @@ var genPgNumOptionsDisplay = function(currentNum, totPgs) {
 
 // create buttons in DOM (incl event listeners) based on values in currentPgNums array
 var createScreenButtons = function(pgNumArray) {
-
+	console.log("made into call create Screen Buttons", etsyApp.currentPgNums);
 	// console.log("**", pgNumArray);
 
 	// if LHS should exist, creat LHS arrow in DOM and add event listener
@@ -218,6 +201,7 @@ var createScreenButtons = function(pgNumArray) {
 	 // make selected pg number (element) the current value
 	 // call new ajax request for selected pg number (element)
 	for (var i = 0; i < pgNumArray.length; i = i + 1) {
+		console.log('made it into for loop to generate array');
 		let theButtonNum = pgNumArray[i];
 
 		// console.log('selected pg', etsyApp.selectedPg);
@@ -231,8 +215,9 @@ var createScreenButtons = function(pgNumArray) {
 		}
 
 		// console.log(">>", theButtonNum)
-
+		console.log('going to assign on click to buttons');
 		pgButton.on('click', function() {
+			console.log('i was clicked');
 			etsyApp.selectedPg = theButtonNum;
 			// console.log("x", pgNumArray[i]);
 			etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, theButtonNum);
@@ -256,17 +241,11 @@ var createScreenButtons = function(pgNumArray) {
 }
 
 
-
-
 // Get local etsy listings based on the chosen category
 etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
-	//bring user to category page on click
-	$(".squareCategory").on("click", function() {
-		//on click of category, get id of category and clear existing categoryItems div
-		$(".categoryItems").empty();
-		var	cat = $(this).attr("id");
-			//clicked category
-			console.log(cat);
+	
+	// remove any existing listings from html
+	$(".eachItem").remove();
 
 		$.ajax({
 			url: "http://proxy.hackeryou.com",
@@ -276,7 +255,7 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 				reqUrl: "https://openapi.etsy.com/v2/listings/active",
 				params: {
 					api_key: etsyApp.key,
-					category: `Weddings/${cat}`,
+					category: 'Weddings/' + etsyApp.cat,
 					tags: "Wedding",
 					lat: lat,
 					lon: lon,
@@ -288,6 +267,8 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 				xmlToJSON: false
 			}
 		}).then(function(listings){
+			console.log('listings 1', listings);
+
 			etsyApp.subCategoryListings = listings.results;
 			for (let i = 0; i < etsyApp.subCategoryListings.length; i++) {
 				var itemListingID = etsyApp.subCategoryListings[i].listing_id;
@@ -300,7 +281,7 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 						reqUrl: `https://openapi.etsy.com/v2/listings/${itemListingID}/images`,
 						params: {
 							api_key: etsyApp.key,
-							category: `Weddings/${cat}`,
+							category: 'Weddings/' + etsyApp.cat,
 							tags: "Wedding",
 							lat: lat,
 							lon: lon,
@@ -329,23 +310,42 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 							<p>$${etsyApp.subCategoryListings[i].price}</p>
 						</div>
 					`);
-						$(".currentlyViewing").text(cat);
+						$(".currentlyViewing").text(etsyApp.cat);
 				});
-			} // end of images for loop
 
-			// console.log(res);
-			// quantity of search results
-			var totNumOfHits = listings.count;
-			// number of search results per page
-			var totNumOfHitsPerPg = listings.params.limit;
-			// if quantity of search results goes evenly into number of search results per pg
-			if (totNumOfHits % totNumOfHitsPerPg === 0) {
-				var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
-			}
-			// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
-			// use math.floor to avoid decimal place results/round up. 
-			else {
-				var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
+				console.log('listings', listings);
+				console.log('total num of hits', listings.count);
+				console.log('num hits per pg', listings.params.limit);
+				// quantity of search results
+				var totNumOfHits = listings.count;
+				// number of search results per page
+				var totNumOfHitsPerPg = listings.params.limit;
+				// if quantity of search results goes evenly into number of search results per pg
+				if (totNumOfHits % totNumOfHitsPerPg === 0) {
+					var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
+				}
+				// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
+				// use math.floor to avoid decimal place results/round up. 
+				else {
+					var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
+				}
+
+				// clear any existing related buttons, arrows and pgNum arrays
+				clearExisting();
+
+				// console.log("****", etsyApp.currentPgNums);
+				// call check page numbers function
+				console.log('tot num of pgs to make', totNumOfPgs);
+				chkPgNums(totNumOfPgs);
+
+
+				$("section.listings").css("display", "block");
+				$('html, body').animate({
+			         scrollTop: $("#listings").offset().top
+			    }, 1000);
+		
+				// $("aside").css("position", "fixed");
+
 			}
 
 			// clear any existing related buttons, arrows and pgNum arrays
@@ -376,9 +376,7 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 		    });
 
 		    etsyApp.getPriceRange();
-		    // etsyApp.changeLocation();
 		});
-	});
 }
 
 
@@ -422,17 +420,24 @@ etsyApp.getPriceRange = function() {
 // Change location sidebar form
 etsyApp.changeLocation = function() {
 	$("#formSidebar").on("submit", function(e) {
-		console.log("new location");
 		e.preventDefault();
 
-		etsyApp.userInputLocation = $("input[id='location']").val();
-		$("input[id='location']").val("");
-		console.log(etsyApp.userInputLocation);
+
+		etsyApp.userInputLocation = $("#formSidebar input[id='locationNew']").val();
+		$("#formSidebar input[id='locationNew']").val("");
+		console.log(`new location: ${etsyApp.userInputLocation}`);
 		etsyApp.lat = undefined;
 		etsyApp.lon = undefined;
 
+	    // $(".categoryItems").empty();
+		$("section.categories").css("display", "block");
+		$('html, body').animate({
+	         scrollTop: $("#categories").offset().top
+	    }, 1000);
 
-		etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
+	    etsyApp.catClickListener();
+
+		// etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.selectedPg);
 	});
 }
 

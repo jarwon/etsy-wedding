@@ -373,8 +373,8 @@ aside {
 	background-color: $grey;
 	border: none;
 	color: #fff;
-	height: 50px;
-	width: 50px;
+	height: 33px;
+	width: 33px;
 	margin: 2px;
 	text-align: center;
 	&:hover {
@@ -445,8 +445,8 @@ button.currentPg {
 		}
 	}
 	.pgNumButtonsContainer button {
-		height: 40px;
-		width: 40px;
+		height: 41px;
+		width: 41px;
 		margin: 3px;
 	}
 	aside {
@@ -540,7 +540,6 @@ button.currentPg {
 				}
 			}
 		}
-	}
 }
 
 @media (max-width: 510px) {
@@ -554,6 +553,7 @@ button.currentPg {
 		}
 	}
 }
+
 
 // Category section break to single column
 @media (max-width: 550px) {
@@ -592,8 +592,8 @@ button.currentPg {
 		}
 	}
 		.pgNumButtonsContainer button {
-			height: 33px;
-			width: 33px;
+			height: 25px;
+			width: 25px;
 			margin: 5px;
 		}
 	section.listings {
