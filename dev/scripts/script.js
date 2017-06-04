@@ -285,10 +285,10 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 				},
 				xmlToJSON: false
 			}
-		}).then(function(res){
-			etsyApp.subCategoryListings = res.results;
-			for (let i = 0; i < res.results.length; i++) {
-				var itemListingID = res.results[i].listing_id;
+		}).then(function(listings){
+			etsyApp.subCategoryListings = listings.results;
+			for (let i = 0; i < etsyApp.subCategoryListings.length; i++) {
+				var itemListingID = etsyApp.subCategoryListings[i].listing_id;
 			
 				$.ajax({
 					url: "http://proxy.hackeryou.com",
@@ -309,9 +309,16 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 						},
 						xmlToJSON: false
 					}
-				}).then(function(res){
-					var itemListingImage = res.results[i].url_570xN;
-					console.log(itemListingImage);
+				}).then(function(images){
+					console.log(images.results);
+					var itemListingImage;
+					if (!images.results[0]) {
+						itemListingImage = "placeholder.jpg";
+					} else {
+						itemListingImage = images.results[0].url_fullxfull;
+					}
+					
+					console.log(images.results[0]);
 
 					$(".categoryItems").append(`
 						<div class="eachItem">
@@ -319,17 +326,16 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 							<h4>${etsyApp.subCategoryListings[i].title}</h4>
 							<p>$${etsyApp.subCategoryListings[i].price}</p>
 							<p class="itemDescription">${etsyApp.subCategoryListings[i].description.substring(0,100)}...</p>
-							<p>${res.results[i].listing_id}</p>	
 						</div>
 					`);
 						$(".currentlyViewing").text(cat);
 				});
 
-				console.log(res);
+				// console.log(res);
 				// quantity of search results
-				var totNumOfHits = res.count;
+				var totNumOfHits = listings.count;
 				// number of search results per page
-				var totNumOfHitsPerPg = res.params.limit;
+				var totNumOfHitsPerPg = listings.params.limit;
 				// if quantity of search results goes evenly into number of search results per pg
 				if (totNumOfHits % totNumOfHitsPerPg === 0) {
 					var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
@@ -396,8 +402,6 @@ etsyApp.getPriceRange = function() {
 
 	});
 }
-
-
 
 $(function() {
 	etsyApp.init();
