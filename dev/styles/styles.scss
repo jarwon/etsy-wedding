@@ -217,7 +217,7 @@ section.listings {
 		margin: 10px 0 20px 0;
 	}
 	.eachItem {
-		background-color: blue;
+		background-color: #FFF5F6;
 		float: left;
 		width: 25%;
 		margin: 10px;
@@ -395,6 +395,18 @@ button.currentPg {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 // RESPONSIVE
 /* Portrait tablet and small desktops */
 @media (max-width: 940px) {
@@ -404,8 +416,8 @@ button.currentPg {
 			display: block;
 		}
 		.eachItem {
-			width: 40%;
-			margin: 10px 0 10px 20px;
+			width: 45%;
+			margin: 10px 0 10px 10px;
 			height: auto;
 			img {
 				width: 100%;
@@ -422,7 +434,6 @@ button.currentPg {
 	h1 {
 		@include headingFont(60px, $black);
 	}
-
 	section.categories {
 		.squareCategory {
 			width: 50%;
@@ -440,93 +451,107 @@ button.currentPg {
 	}
 	aside {
 		display: none;
+		position: static;
 	}
-
 	section.listings {
 		.categoryItems {
 			width: 100%;
 			margin-top: 300px;
+			display: block;
 		}
 		.eachItem {
 			width: 30%;
 			margin: 10px;
 			height: 400px;
 			img {
-				
 			}
 		}
-	}
-
-	.nav {
-		display: block;
-		width: 100%;
-		z-index: 1;
-		position: relative;
-		background-color: $purple;
-		p, h2 {
-			font-size: 16px;
-			display: inline-block;
-			background-color: $purple;
-			margin: 40px 10px 0 40px;
-		}
-		p:nth-child(3) {
+		.nav {
 			display: block;
-			margin-bottom: 0;
-
-		}
-		.currentlyViewing {
-			font-size: 24px;
-			display: inline;
-		}
-		ul {
-			list-style-type: none;
+			width: 100%;
+			z-index: 1;
+			position: relative;
 			background-color: $purple;
-			padding: 0;
-			margin: 0;
-			text-align: center;
-			li {
-			display: inline-block;
-			margin: 5px;
-				a {
-					color: #fff;
-					cursor: pointer;
-					&:hover {
-						color: $black;
+			p, h2 {
+				font-size: 18px;
+				display: inline-block;
+				background-color: $purple;
+				margin: 40px 10px 0 40px;
+			}
+			p:nth-child(3) {
+				display: block;
+				margin-bottom: 10px;
+			}
+			.currentlyViewing {
+				font-size: 24px;
+				display: inline;
+				margin-left: 0;
+			}
+			ul {
+				list-style-type: none;
+				background-color: $purple;
+				padding: 0px 100px;
+				margin: 0;
+				text-align: center;
+				font-size: 24px;
+				li {
+				display: inline-block;
+				margin: 5px;
+					a {
+						color: #fff;
+						cursor: pointer;
+						&:hover {
+							color: $black;
+						}
 					}
 				}
 			}
+			.price {
+				.priceRange {
+					p:nth-of-type(2) {
+						display: inline-block;
+					}
+				}
+				padding: 30px;
+				p.priceLabel {
+					display: block;
+					margin: 5px 20px;
+				}
+				p {
+					display: inline-block;
+					margin: 0 5px;
+					font-style: italic;
+				}
+				input[type=number] {
+					display: inline-block;
+					width: 100px;
+					padding: 5px;
+					font-size: 12px;
+				}
+				input[type=submit] {
+					display: inline-block;
+					width: 100px;
+					font-size: 12px;
+					padding: 5px;
+					margin: 10px 0;
+				}
+				form {
+					margin: 0;
+				}
+			}
+		}
+}
 
-			}
+@media (max-width: 510px) {
+	.price {
+		input[type=submit] {
+			display: inline-block;
+			width: 100px;
+			font-size: 12px;
+			padding: 5px;
+			margin: 10px 0;
 		}
-		.price {
-			padding: 30px;
-			margin-left: 50px;
-			p.priceLabel {
-				display: inline-block;
-				margin: 5px 20px;
-				text-align: center;
-			}
-			p {
-				display: inline-block;
-				margin: 0 5px;
-				font-style: italic;
-			}
-			input[type=number] {
-				display: inline-block;
-				width: 100px;
-				padding: 5px;
-				font-size: 12px;
-			}
-			input[type=submit] {
-				display: inline-block;
-				width: 100px;
-				font-size: 12px;
-				padding: 5px;
-			}
-			form {
-				margin: 0;
-			}
-		}
+	}
 }
 
 
@@ -544,8 +569,11 @@ button.currentPg {
 	h1 {
 		@include headingFont(45px, $black);
 	}
-	.logo img {
-		width: 80px;
+	.brand .logo img {
+		width: 100px;
+		height: 100px;
+		margin: 0 auto;
+		text-align: center;
 	}
 	form {
 		margin: 20px 0;
@@ -557,6 +585,11 @@ button.currentPg {
 		h3 {
 			display: none;
 		}
+		.grid {
+			h2 {
+				display: inline-block;
+			}
+		}
 	}
 		.pgNumButtonsContainer button {
 			height: 25px;
@@ -564,64 +597,90 @@ button.currentPg {
 			margin: 5px;
 		}
 	section.listings {
+		.categoryItems {
+			width: 100%;
+			margin-top: 300px;
+			display: block;
+		}
 		.eachItem {
-			width: 80%;
-			margin: 10px 0 10px 40px;
-			height: 350px;
-			p {
-				font-size: 18px;
+			width: 30%;
+			margin: 10px;
+			height: 400px;
+			img {
 			}
 		}
-	}
-	.nav {
-		p, h2 {
-			font-size: 20px;
+		.nav {
 			display: block;
+			width: 100%;
+			z-index: 1;
+			position: relative;
 			background-color: $purple;
-			padding: 20px 20px 0 20px;
-			margin: 0;
-		}
-		.currentlyViewing {
-			font-size: 24px;
-			display: block;
-			padding: 10px 0 0 20px;
-		}
-		ul {
-			li {
-			display: block;
-			margin-left: 20px;
-				a {
-					color: #fff;
-					cursor: pointer;
-					font-size: 18px;
-					&:hover {
-						color: $black;
+			p, h2 {
+				font-size: 18px;
+				display: inline-block;
+				background-color: $purple;
+				margin: 40px 10px 0 40px;
+			}
+			p:nth-child(3) {
+				display: block;
+				margin-bottom: 10px;
+			}
+			.currentlyViewing {
+				font-size: 24px;
+				display: block;
+				text-align: center;
+			}
+			ul {
+				list-style-type: none;
+				background-color: $purple;
+				padding: 0px 100px;
+				margin: 0;
+				text-align: center;
+				font-size: 24px;
+				li {
+				display: inline-block;
+				margin: 5px;
+					a {
+						color: #fff;
+						cursor: pointer;
+						&:hover {
+							color: $black;
+						}
 					}
 				}
 			}
-		}
-		.price {
-			padding: 20px;
-			margin: 0;
-			p.priceLabel, p {
-				display: inline-block;
-				margin: 5px;
-				padding: 0;
-			}
-			input[type=number] {
-				display: inline-block;
-				width: 50px;
-				padding: 5px;
-				font-size: 12px;
-			}
-			input[type=submit] {
-				display: inline-block;
-				width: 75px;
-				font-size: 12px;
-				padding: 5px;
-			}
-			form {
-				margin: 0;
+			.price {
+				margin-left: 55px;
+				.priceRange {
+					p:nth-of-type(2) {
+						display: inline-block;
+					}
+				}
+				p.priceLabel {
+					display: block;
+				}
+				p {
+					display: inline-block;
+					margin: 0 5px;
+					font-style: italic;
+				}
+				input[type=number] {
+					display: inline-block;
+					width: 50px;
+					padding: 10px;
+					font-size: 16px;
+					
+				}
+				input[type=submit] {
+					display: block;
+					width: 185px;
+					font-size: 16px;
+					padding: 10px;
+					margin: 10px 0;
+				}
+				form {
+					margin: 0;
+				}
 			}
 		}
 	}

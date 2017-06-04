@@ -367,7 +367,12 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 		    		$("aside").css("position", "fixed");
 		    	} else {
 		    		$("aside").css("position", "static");
-		    	}
+		    	} 
+
+		    	if (screen.width < 768) {
+                    $("aside").css("position", "static");
+                }
+
 		    });
 
 		    etsyApp.getPriceRange();
