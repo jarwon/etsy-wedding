@@ -288,6 +288,8 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 				xmlToJSON: false
 			}
 		}).then(function(listings){
+			console.log(listings);
+
 			etsyApp.subCategoryListings = listings.results;
 			for (let i = 0; i < etsyApp.subCategoryListings.length; i++) {
 				var itemListingID = etsyApp.subCategoryListings[i].listing_id;
@@ -371,7 +373,6 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 		    });
 
 		    etsyApp.getPriceRange();
-		    // etsyApp.changeLocation();
 		});
 	});
 }
@@ -415,21 +416,26 @@ etsyApp.getPriceRange = function() {
 
 
 // Change location sidebar form
-etsyApp.changeLocation = function() {
-	$("#formSidebar").on("submit", function(e) {
-		console.log("new location");
-		e.preventDefault();
-
-		etsyApp.userInputLocation = $("input[id='location']").val();
-		$("input[id='location']").val("");
-		console.log(etsyApp.userInputLocation);
-		etsyApp.lat = undefined;
-		etsyApp.lon = undefined;
+// etsyApp.changeLocation = function() {
+// 	$("#formSidebar").on("submit", function(e) {
+// 		e.preventDefault();
 
 
-		etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
-	});
-}
+// 		etsyApp.userInputLocation = $("#formSidebar input[id='locationNew']").val();
+// 		$("#formSidebar input[id='locationNew']").val("");
+// 		console.log(`new location: ${etsyApp.userInputLocation}`);
+// 		etsyApp.lat = undefined;
+// 		etsyApp.lon = undefined;
+
+// 		$("section.categories").css("display", "block");
+// 		$('html, body').animate({
+// 	         scrollTop: $("#categories").offset().top
+// 	    }, 1000);
+
+// 		etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
+// 	    $(".categoryItems").empty();
+// 	});
+// }
 
 
 $(function() {
