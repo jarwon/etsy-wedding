@@ -327,7 +327,6 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 							<a href="${etsyApp.subCategoryListings[i].url}"><img src="${itemListingImage}"></a>
 							<h4>${etsyApp.subCategoryListings[i].title}</h4>
 							<p>$${etsyApp.subCategoryListings[i].price}</p>
-							<p class="itemDescription">${etsyApp.subCategoryListings[i].description.substring(0,100)}...</p>
 						</div>
 					`);
 						$(".currentlyViewing").text(cat);
@@ -406,8 +405,7 @@ etsyApp.getPriceRange = function() {
 				<div class="eachItem">
 					<a href="${listing.url}"><img src="http://via.placeholder.com/200x200"></a>
 					<h4>${listing.title}</h4>
-					<p>$${listing.price}</p>
-					<p class="itemDescription">${listing.description.substring(0,200)}...</p>	
+					<p>$${listing.price}</p>	
 				</div>
 			`);
 		});
