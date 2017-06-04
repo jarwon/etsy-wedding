@@ -16,7 +16,7 @@ etsyApp.cat = "";
 etsyApp.init = function() {
 	etsyApp.getLocation();
 	// etsyApp.getPriceRange();
-	// etsyApp.changeLocation();
+	etsyApp.changeLocation();
 };
 
 
@@ -61,9 +61,6 @@ etsyApp.userLocation = function(userPosition){
 	console.log(etsyApp.lat, etsyApp.lon);
 
   	etsyApp.catClickListener();
-
-	// Run ajax request function only after you have the user's location
-	// etsyApp.getLocalListings(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
 };
 
 
@@ -79,9 +76,6 @@ etsyApp.getUserInput = function() {
 		etsyApp.lon = undefined;
 
 	    etsyApp.catClickListener();
-
-		// Run ajax request function only after you have the user's location
-		// etsyApp.getLocalListings(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
 	});
 };
 
@@ -96,55 +90,9 @@ etsyApp.catClickListener = function() {
 			console.log(etsyApp.cat);
 	etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.selectedPg);
 	
-	});
-
-	
+	});	
 }
 
-// Get etsy listings based on user location (either latitude & longitude coordinates from geolocation OR from location text input if user denied access to geolocation)
-// etsyApp.getLocalListings = function(lat, lon, userInputLocation, currentPg) {
-	
-// 	$.ajax({
-// 		url: "http://proxy.hackeryou.com",
-// 		method: "GET",
-// 		dataType: "json",
-// 		data: {
-// 			reqUrl: "https://openapi.etsy.com/v2/listings/active",
-// 			params: {
-// 				api_key: etsyApp.key,
-// 				category: "weddings",
-// 				lat: lat,
-// 				lon: lon,
-// 				location: userInputLocation,
-// 				// sort_on: "price"
-// 				page: currentPg
-// 			},
-// 			xmlToJSON: false
-// 		}
-// 	}).then(function(res) {
-// 		console.log(res);
-// 		// quantity of search results
-// 		var totNumOfHits = res.count;
-// 		// number of search results per page
-// 		var totNumOfHitsPerPg = res.params.limit;
-// 		// if quantity of search results goes evenly into number of search results per pg
-// 		if (totNumOfHits % totNumOfHitsPerPg === 0) {
-// 			var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
-// 		}
-// 		// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
-// 		// use math.floor to avoid decimal place results/round up. 
-// 		else {
-// 			var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
-// 		}
-
-// 		// clear any existing related buttons, arrows and pgNum arrays
-// 		clearExisting();
-
-// 		// console.log("****", etsyApp.currentPgNums);
-// 		// call check page numbers function
-// 		chkPgNums(totNumOfPgs);
-// 	});
-// }
 
 // clear any existing related buttons, arrows and pgNum arrays
 var clearExisting = function () {
@@ -465,26 +413,28 @@ etsyApp.getPriceRange = function() {
 
 
 // Change location sidebar form
-// etsyApp.changeLocation = function() {
-// 	$("#formSidebar").on("submit", function(e) {
-// 		e.preventDefault();
+etsyApp.changeLocation = function() {
+	$("#formSidebar").on("submit", function(e) {
+		e.preventDefault();
 
 
-// 		etsyApp.userInputLocation = $("#formSidebar input[id='locationNew']").val();
-// 		$("#formSidebar input[id='locationNew']").val("");
-// 		console.log(`new location: ${etsyApp.userInputLocation}`);
-// 		etsyApp.lat = undefined;
-// 		etsyApp.lon = undefined;
+		etsyApp.userInputLocation = $("#formSidebar input[id='locationNew']").val();
+		$("#formSidebar input[id='locationNew']").val("");
+		console.log(`new location: ${etsyApp.userInputLocation}`);
+		etsyApp.lat = undefined;
+		etsyApp.lon = undefined;
 
-// 		$("section.categories").css("display", "block");
-// 		$('html, body').animate({
-// 	         scrollTop: $("#categories").offset().top
-// 	    }, 1000);
+	    // $(".categoryItems").empty();
+		$("section.categories").css("display", "block");
+		$('html, body').animate({
+	         scrollTop: $("#categories").offset().top
+	    }, 1000);
 
-// 		etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.currentPg);
-// 	    $(".categoryItems").empty();
-// 	});
-// }
+	    etsyApp.catClickListener();
+
+		// etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.selectedPg);
+	});
+}
 
 
 $(function() {
