@@ -281,7 +281,7 @@ etsyApp.getCategory = function (lat, lon, userInputLocation, currentPg) {
 	console.log('category', etsyApp.cat);
 
 	$.ajax({
-		url: "http://proxy.hackeryou.com",
+		url: "https://proxy.hackeryou.com",
 		method: "GET",
 		dataType: "json",
 		data: {
@@ -308,7 +308,7 @@ etsyApp.getCategory = function (lat, lon, userInputLocation, currentPg) {
 
 
 			$.ajax({
-				url: "http://proxy.hackeryou.com",
+				url: "https://proxy.hackeryou.com",
 				method: "GET",
 				dataType: "json",
 				data: {
