@@ -117,17 +117,17 @@ var chkPgNums = function(totPgs) {
 			createScreenButtons(etsyApp.currentPgNums);
 		} 
 	} else {
-		console.log("second", etsyApp.selectedPg, totPgs);
+		// console.log("second", etsyApp.selectedPg, totPgs);
 		// if there are more than 5 pages call function to determin which pg numbers to display (what numbers to fill etsyApp.currentPgNums with)
 		genPgNumOptionsDisplay(etsyApp.selectedPg, totPgs);
 	}
 }
 
 var genPgNumOptionsDisplay = function(currentNum, totPgs) {
-	console.log('made it to gen pg num display options');
+	// console.log('made it to gen pg num display options');
 	// if either of first three pages are selected
 	if (currentNum === 1 || currentNum === 2 || currentNum === 3) {
-		console.log('made it to pg 1 of button options');
+		// console.log('made it to pg 1 of button options');
 		// make an array of the total page numbers, RHS arrow will exist, no LHS (default LHS)
 		etsyApp.currentPgNums = [1, 2, 3, 4, 5];
 		etsyApp.showRHSarrow = true;
@@ -171,7 +171,7 @@ var genPgNumOptionsDisplay = function(currentNum, totPgs) {
 		}
 	};
 
-	console.log("about to call create Screen Buttons", etsyApp.currentPgNums);
+	// console.log("about to call create Screen Buttons", etsyApp.currentPgNums);
 	// call create screen buttons with array as parameter
 	createScreenButtons(etsyApp.currentPgNums);
 }
@@ -180,7 +180,7 @@ var genPgNumOptionsDisplay = function(currentNum, totPgs) {
 
 // create buttons in DOM (incl event listeners) based on values in currentPgNums array
 var createScreenButtons = function(pgNumArray) {
-	console.log("made into call create Screen Buttons", etsyApp.currentPgNums);
+	// console.log("made into call create Screen Buttons", etsyApp.currentPgNums);
 	// console.log("**", pgNumArray);
 
 	// if LHS should exist, creat LHS arrow in DOM and add event listener
@@ -201,7 +201,7 @@ var createScreenButtons = function(pgNumArray) {
 	 // make selected pg number (element) the current value
 	 // call new ajax request for selected pg number (element)
 	for (var i = 0; i < pgNumArray.length; i = i + 1) {
-		console.log('made it into for loop to generate array');
+		// console.log('made it into for loop to generate array');
 		let theButtonNum = pgNumArray[i];
 
 		// console.log('selected pg', etsyApp.selectedPg);
@@ -215,7 +215,7 @@ var createScreenButtons = function(pgNumArray) {
 		}
 
 		// console.log(">>", theButtonNum)
-		console.log('going to assign on click to buttons');
+		// console.log('going to assign on click to buttons');
 		pgButton.on('click', function() {
 			console.log('i was clicked');
 			etsyApp.selectedPg = theButtonNum;
@@ -314,8 +314,8 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 				});
 
 				console.log('listings', listings);
-				console.log('total num of hits', listings.count);
-				console.log('num hits per pg', listings.params.limit);
+				// console.log('total num of hits', listings.count);
+				// console.log('num hits per pg', listings.params.limit);
 				// quantity of search results
 				var totNumOfHits = listings.count;
 				// number of search results per page
@@ -335,7 +335,7 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 
 				// console.log("****", etsyApp.currentPgNums);
 				// call check page numbers function
-				console.log('tot num of pgs to make', totNumOfPgs);
+				// console.log('tot num of pgs to make', totNumOfPgs);
 				chkPgNums(totNumOfPgs);
 
 
@@ -362,6 +362,13 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 
 		    var homeHeight = $("section.home").outerHeight();
 		    var categoriesHeight = $("section.categories").outerHeight();
+		    var asideTop = $("aside").outerHeight();
+		    var navTop = $(".nav").outerHeight();
+		    console.log(`aside: ${asideTop}, nav: ${navTop}`);
+		    var navHeight = asideTop - navTop;
+		    console.log(`nav height: ${navHeight}`);
+
+
 		    $(window).on("scroll", function() {
 		    	if (screen.width <= 768) {
                     $("aside").css("position", "static");
@@ -372,11 +379,15 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 		    	} 
 		    });
 
+
+			if (screen.width <= 768) {
+				$(".listingsContent").css("background-color", "red");
+			};
+		  
+
 		    etsyApp.getPriceRange();
 		});
 }
-
-
 
 
 // Get values of user's price range to narrow down listings
