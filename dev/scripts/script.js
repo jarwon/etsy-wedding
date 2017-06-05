@@ -18,7 +18,6 @@ etsyApp.init = function() {
 	etsyApp.changeLocation();
 };
 
-
 // Landing page: Get user's location either by device's navigator geolocation if access allowed OR from user's location text input if they deny access to navigator geolocation
 etsyApp.getLocation = function() {
 	
@@ -50,7 +49,6 @@ etsyApp.getLocation = function() {
 	});
 };
 
-
 // Get user's location via navigator geolocation (longitude & latitude coordinates)
 etsyApp.userLocation = function(userPosition){
 	console.log(userPosition);
@@ -63,7 +61,6 @@ etsyApp.userLocation = function(userPosition){
 	$(".squareCategory").off("click");
   	etsyApp.catClickListener();
 };
-
 
 // Get user's location from text input field (city name - can be more specific if they wish, e.g. "Sydney, Australia"; just "Sydney" gives listings from Sydney, Nova Scotia)
 etsyApp.getUserInput = function() {
@@ -107,10 +104,8 @@ etsyApp.sidebarCatListener = function() {
 			//clicked category
 			console.log('i was clicked', etsyApp.cat);
 		etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.selectedPg);
-	
 	});	
 }
-
 
 // user selects subcatagory from unhidden nav sidebar option, AJAX function
 etsyApp.navSidebarCatListener = function() {
@@ -128,13 +123,6 @@ etsyApp.navSidebarCatListener = function() {
 	});	
 }
 
-
-
-
-
-
-
-
 // clear any existing related buttons, arrows and pgNum arrays
 var clearExisting = function () {
 	$(".pgArrow").remove();
@@ -143,7 +131,6 @@ var clearExisting = function () {
 	etsyApp.showLHSarrow = false;
 	etsyApp.showRHSarrow = false;
 }
-
 
 // we display up to 5 page numbers at a time
 // check if number of pages is <5 and fill currentPgNums array
@@ -212,14 +199,11 @@ var genPgNumOptionsDisplay = function(currentNum, totPgs) {
 			etsyApp.showLHSarrow = true;
 		}
 	};
-
 	// console.log("about to call create Screen Buttons", etsyApp.currentPgNums);
 	// call create screen buttons with array as parameter
 	createScreenButtons(etsyApp.currentPgNums);
 }
 	
-
-
 // create buttons in DOM (incl event listeners) based on values in currentPgNums array
 var createScreenButtons = function(pgNumArray) {
 	// console.log("made into call create Screen Buttons", etsyApp.currentPgNums);
@@ -282,14 +266,12 @@ var createScreenButtons = function(pgNumArray) {
 	}
 }
 
-
 // Get local etsy listings based on the chosen category
 etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 	
 	// clear any existing categoryItems div
 	$(".categoryItems").empty();
 	console.log('category', etsyApp.cat);
-
 
 		$.ajax({
 			url: "http://proxy.hackeryou.com",
@@ -355,7 +337,6 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 					}
 					    }
 
-
 					console.log(images.results[0]);
 
 					$(".categoryItems").append(`
@@ -405,31 +386,23 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 			// call check page numbers function
 			chkPgNums(totNumOfPgs);
 
-
-		
-	
 				// set-up listeners for sidebar categories selectors, clear any existing
 				$(".sidebarCat").off("click"); 
 				$(".navSidebarCat").off("click"); 
 				etsyApp.sidebarCatListener();
 
-
-			
 			if (window.matchMedia('(max-width: 768px)').matches) {
 
 			// 	// set-up listeners for unhidden nav sidebar categories selectors, clear any existing
 				$(".sidebarCat").off("click"); 
 				$(".navSidebarCat").off("click"); 
 				etsyApp.navSidebarCatListener();
-
 			}
-				
 
 			// set-up listeners for user price range selection
 		    etsyApp.getPriceRange();
 		});
 }
-
 
 // Get values of user's price range to narrow down listings
 etsyApp.getPriceRange = function() {
@@ -441,7 +414,6 @@ etsyApp.getPriceRange = function() {
 		var priceMax = $("#maxPrice").val();
 		console.log(`min price: $${priceMin}, max price: $${priceMax}`);
 		$("input[type=number]").val("");
-		
 
 		let subCategoryListings = etsyApp.subCategoryListings;
 		var listingsInPriceRange = subCategoryListings.filter(function(listing) {
@@ -465,7 +437,6 @@ etsyApp.getPriceRange = function() {
 	});
 }
 
-
 // Change location sidebar form
 etsyApp.changeLocation = function() {
 	$("#formSidebar").on("submit", function(e) {
@@ -480,7 +451,6 @@ etsyApp.changeLocation = function() {
 		etsyApp.selectedPg = 1;
 		etsyApp.cat = "";
 
-
 	    // go to categories section and wait for user to select new category (call click listener)
 		$("section.categories").css("display", "block");
 		$('html, body').animate({
@@ -493,7 +463,6 @@ etsyApp.changeLocation = function() {
 
 	});
 }
-
 
 $(function() {
 	etsyApp.init();

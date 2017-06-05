@@ -41,10 +41,8 @@ a {
       background-color: #fff;
       content: " ";
     }
-
   }
 }
-
 
 .wrapper {
 	max-width: 1280px;
@@ -134,7 +132,6 @@ button.findGeolocation {
 	background-repeat: no-repeat;
 	background-size: cover;
 	position: relative;
-
 }
 
 section.home {
@@ -245,7 +242,6 @@ section.listings {
 	.eachItem {
 		background-color: #FFF5F6;
 		float: left;
-		// width: 25%;
 		width: calc(33.3% - 20px);
 		margin: 10px;
 		padding: 20px;
@@ -355,7 +351,7 @@ aside {
 }
 
 #Decorations .imageContainer {
-	background-image: url(../../public/assets/decorations/1397266_10155709443060177_201621716474901513_o.jpg);
+	background-image: url(../../public/assets/decoration.jpg);
 }
 
 #Gifts .imageContainer {
@@ -383,10 +379,8 @@ aside {
 	right: 0;
 	background-color: rgba(239, 216, 225, 0.35);
 	}
-
 	&:hover {
 		transform: scale(1.09);
-
 		&:before {
 			background-color: rgba(142, 142, 142, 0.5);
 		}
@@ -422,8 +416,6 @@ button.currentPg {
 		color: white;
 	}
 }
-
-
 
 // RESPONSIVE
 /* Portrait tablet and small desktops */
@@ -594,7 +586,6 @@ button.currentPg {
 	}
 }
 
-
 @media (max-width: 560px) {
 	section.listings {
 		.eachItem {
@@ -603,9 +594,6 @@ button.currentPg {
 		}
 	}
 }
-
-
-
 
 // Category section break to single column
 @media (max-width: 550px) {
@@ -625,7 +613,6 @@ button.currentPg {
 	}
 }
 
-
 @media (max-width: 510px) {
 	.price {
 		input[type=submit] {
@@ -637,7 +624,6 @@ button.currentPg {
 		}
 	}
 }
-
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
@@ -733,7 +719,6 @@ button.currentPg {
 				}
 			}
 			.price {
-				// margin-left: 55px;
 				text-align: right;
 				.priceRange {
 					p:nth-of-type(2) {
