@@ -85,6 +85,7 @@ label[for=location] {
 	font-style: italic;
 	display: block;
 	margin-bottom: 5px;
+	padding-right: 26px;
 }
 
 input[type=text], input[type=number] {
@@ -183,6 +184,8 @@ section.categories {
 	.grid {
 		max-width: 1000px;
 		margin: 0 auto;
+		padding-top: 15px;
+		padding-bottom: 10px;
 		h2 {
 			margin-top: 0px;
 		}
@@ -225,7 +228,7 @@ section.categories {
 				@include bodyFont(14px, $black)
 				text-align: center;
 				text-transform: uppercase;
-				margin-top: 25px;
+				transform: translateY(80%);
 			}
 		}
 	}
@@ -246,12 +249,14 @@ section.listings {
 		width: calc(33.3% - 20px);
 		margin: 10px;
 		padding: 20px;
-		height: 500px;
+		height: 430px;
 		p {
 			font-size: 14px;
 		}
 		img {
 			width: 100%;
+			max-height: 250px;
+
 		}
 	}
 	position: relative;
@@ -349,7 +354,7 @@ aside {
 	background-image: url(../../public/assets/clothing_1.jpg);
 }
 
-#Decoration .imageContainer {
+#Decorations .imageContainer {
 	background-image: url(../../public/assets/decorations/1397266_10155709443060177_201621716474901513_o.jpg);
 }
 
@@ -405,7 +410,7 @@ aside {
 		background-color: $black;
 	}
 	&:active {
-		background-color: red;
+		background-color: $purple;
 	}
 }
 
@@ -427,9 +432,9 @@ button.currentPg {
 		.eachItem {
 			width: calc(50% - 20px);
 			margin: 10px;
-			height: auto;
 			img {
 				width: 100%;
+				max-height: 215px;
 			}
 			p {
 				font-size: 16px;
@@ -468,6 +473,7 @@ button.currentPg {
 	}
 
 	section.listings {
+		margin-top: 0px;
 		.categoryItems {
 			width: 100%;
 			display: block;
@@ -476,11 +482,21 @@ button.currentPg {
 			width: 30%;
 			margin: 10px;
 			height: 400px;
+			img {
+				max-height: 170px;
+			}
+			p {
+				margin-top: 10px;
+			}
 		}
 		.nav {
 			.logo {
-				width: 200px;
-				margin: 0 auto;
+				width: 50px;
+				height: 50px;
+				text-align: right;
+				img {
+					max-width: 100%;
+				}
 			}
 			display: block;
 			width: 100%;
@@ -488,14 +504,19 @@ button.currentPg {
 			position: relative;
 			background-color: $purple;
 			p, h2 {
-				font-size: 18px;
+				font-size: 16px;
 				display: inline-block;
 				background-color: $purple;
-				margin: 20px 10px 0 40px;
+				margin: 20px 10px 0 50px;
 			}
 			p:nth-child(3), p:nth-child(4) {
 				display: block;
 				margin-bottom: 10px;
+			}
+			.currentlyPreViewing {
+				margin-top: 0px;
+				margin-left: 50px;
+				margin-right: 10px;
 			}
 			.currentlyViewing {
 				font-size: 20px;
@@ -555,7 +576,55 @@ button.currentPg {
 				}
 			}
 		}
+	}
 }
+
+
+@media (max-width: 650px) {
+	section.listings {
+		.eachItem {
+			height: 365px;
+			h4 {
+				font-size: 14px;
+			}
+			p {
+				font-size: 14px;
+			}
+		}
+	}
+}
+
+
+@media (max-width: 560px) {
+	section.listings {
+		.eachItem {
+		img {
+			max-height: 135px
+		}
+	}
+}
+
+
+
+
+// Category section break to single column
+@media (max-width: 550px) {
+	section.categories {
+		.squareCategory {
+			width: 100%;
+		}
+	}
+
+	section.listings {
+		.eachItem {
+			height: 325px;
+			h4 {
+				font-size: 14px;
+			}
+		}
+	}
+}
+
 
 @media (max-width: 510px) {
 	.price {
@@ -570,15 +639,6 @@ button.currentPg {
 }
 
 
-// Category section break to single column
-@media (max-width: 550px) {
-	section.categories {
-		.squareCategory {
-			width: 100%;
-		}
-	}
-}
-
 /* Landscape phones and down */
 @media (max-width: 480px) {
 	h1 {
@@ -589,6 +649,9 @@ button.currentPg {
 	}
 	input[id=location] {
 		margin-bottom: 5px;
+	}
+	label[for=location] {
+		padding-right: 0px;
 	}
 	section.categories {
 		h3 {
@@ -608,13 +671,17 @@ button.currentPg {
 	section.listings {
 		.categoryItems {
 			width: 100%;
-			margin-top: 300px;
+			margin-top: 15px;
 			display: block;
 		}
 		.eachItem {
 			width: 80%;
-			margin: 10px;
+			transform: translateX(9%);
 			height: auto;
+			img {
+				max-height: 120px;
+				width: 50%;
+			}
 		}
 		.nav {
 			.logo {
@@ -632,7 +699,7 @@ button.currentPg {
 				font-size: 16px;
 				display: inline-block;
 				background-color: $purple;
-				margin: 50px 10px 0 40px;
+				margin: 10px 10px 0 40px;
 				}
 			p:nth-child(3) {
 				display: block;
@@ -703,3 +770,11 @@ button.currentPg {
 }
 }
 
+@media (max-width: 480px) {
+	.logo img {
+		width: 75px;
+	}
+	input[type=submit] {
+		margin-top: 3px;
+	}
+}
