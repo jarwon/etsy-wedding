@@ -298,12 +298,8 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 					}
 				}).then(function(images){
 					console.log(images.results);
-					var itemListingImage;
-					if (!images.results[0]) {
-						itemListingImage = "placeholder.jpg";
-					} else {
-						itemListingImage = images.results[0].url_fullxfull;
-					}
+					var itemListingImage = images.results[0].url_fullxfull;
+					
 					
 					console.log(images.results[0]);
 
