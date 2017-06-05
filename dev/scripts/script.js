@@ -331,23 +331,6 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 		    var navHeight = asideTop - navTop;
 		    console.log(`nav height: ${navHeight}`);
 
-
-		    $(window).on("scroll", function() {
-		    	if (screen.width <= 768) {
-                    $("aside").css("position", "static");
-                } else if ($(window).scrollTop() >= (homeHeight + categoriesHeight)) {
-		    		$("aside").css("position", "fixed");
-		    	} else {
-		    		$("aside").css("position", "static");
-		    	} 
-		    });
-
-
-			if (screen.width <= 768) {
-				$(".listingsContent").css("background-color", "red");
-			};
-		  
-
 		    // quantity of search results
 			var totNumOfHits = listings.count;
 			// number of search results per page
