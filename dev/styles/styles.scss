@@ -242,7 +242,8 @@ section.listings {
 	.eachItem {
 		background-color: #FFF5F6;
 		float: left;
-		width: 25%;
+		// width: 25%;
+		width: calc(33.3% - 20px);
 		margin: 10px;
 		padding: 20px;
 		height: 500px;
@@ -330,10 +331,10 @@ aside {
 	position: absolute;
 	top: 0;
 	right: 0;
+	text-align: center;
 	.categoryItems {
 		display: block;
 	}
-	text-align: center;
 }
 
 .nav {
@@ -423,13 +424,9 @@ button.currentPg {
 /* Portrait tablet and small desktops */
 @media (max-width: 940px) {
 	section.listings {
-		.categoryItems {
-			width: 70%;
-			display: block;
-		}
 		.eachItem {
-			width: 45%;
-			margin: 10px 0 10px 10px;
+			width: calc(50% - 20px);
+			margin: 10px;
 			height: auto;
 			img {
 				width: 100%;
@@ -463,12 +460,16 @@ button.currentPg {
 	}
 	aside {
 		display: none;
-		position: static;
 	}
+
+	.listingsContent {
+		width: 100%;
+	}
+
 	section.listings {
 		.categoryItems {
 			width: 100%;
-			margin-top: 300px;
+			// margin-top: 300px;
 			display: block;
 		}
 		.eachItem {
@@ -601,11 +602,11 @@ button.currentPg {
 			}
 		}
 	}
-		.pgNumButtonsContainer button {
-			height: 25px;
-			width: 25px;
-			margin: 5px;
-		}
+	.pgNumButtonsContainer button {
+		height: 25px;
+		width: 25px;
+		margin: 5px;
+	}
 	section.listings {
 		.categoryItems {
 			width: 100%;
@@ -702,3 +703,4 @@ button.currentPg {
 	}
 }
 }
+
