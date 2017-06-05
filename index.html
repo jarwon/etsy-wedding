@@ -19,7 +19,7 @@
 					<img src="public/assets/logo.svg" alt="logo">
 				</div>
 				<h1>b<span>ring</span> it local</h1>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque excepturi aut provident nulla ex dignissimos, laborum quas exercitationem possimus aspernatur. Esse nam nostrum voluptatum!</p>
+				<p>Find etsy listings around you and shop your wedding locally!</p>
 
 				<form action="#" id="form" class="clearfix">
 					<label for="location">Enter your city:</label>
@@ -36,7 +36,6 @@
 	</div> <!-- /.homeWrapper -->
 
 
-
 	<section class="categories clearfix" id="categories">
 		<div class="brand">
 			<div class="logo">
@@ -46,8 +45,7 @@
 		</div>
 
 		<div class="grid clearfix">
-			<h2>choose a category</h2>
-
+			<!-- <h2>choose a category</h2> -->
 			<div class="squareCategory" id="Accessories">
 				<div class="hiddenBoundary">
 					<div class="imageContainer"></div>
@@ -60,7 +58,7 @@
 					<div class="overlay"><p>Clothing</p></div>
 				</div>
 			</div>
-			<div class="squareCategory" id="Decoration">
+			<div class="squareCategory" id="Decorations">
 				<div class="hiddenBoundary">
 					<div class="imageContainer"></div>
 					<div class="overlay"><p>Decorations</p></div>
@@ -81,30 +79,32 @@
 			<div class="squareCategory" id="Jewelry">
 				<div class="hiddenBoundary">
 					<div class="imageContainer"></div>
-					<div class="overlay"><p>Jewellery</p></div>
+					<div class="overlay"><p>Jewelry</p></div>
 				</div>
 			</div>
 		</div> <!-- /.grid -->
 	</section> <!-- /.categories -->
 
-	<section class="listings clearfix" id="listings">
 
+	<!-- nav hidden sidebar (appears at 768px) -->
+	<section class="listings clearfix" id="listings">
+		
 		<div class="nav hidden clearfix">
 			<div class="logo">
 				<img src="public/assets/logo.svg" alt="Logo">
 			</div>
 			<p class="currentlyPreViewing">You are currently viewing listings for:</p>
 			<h2 class="currentlyViewing"></h2>
-			<p>Choose your category:</p>
+			<p>New category search:</p>
 				<ul>
-					<li><a href="#" alt="" id="Accessories">Accessories</a></li>
-					<li><a href="#" alt="" id="Clothing">Clothing</a></li>
-					<li><a href="#" alt="" id="Decoration">Decorations</a></li>
-					<li><a href="#" alt="" id="Gifts">Gift & Momentos</a></li>
-					<li><a href="#" alt="" id="Invitation">Invitations</a></li>
-					<li><a href="#" alt="" id="Jewelry">Jewellery</a></li>
+					<li><a href="#" alt="" class="Accessories navSidebarCat">Accessories</a></li>
+					<li><a href="#" alt="" class="Clothing navSidebarCat">Clothing</a></li>
+					<li><a href="#" alt="" class="Decorations navSidebarCat">Decorations</a></li>
+					<li><a href="#" alt="" class="Gifts navSidebarCat">Gift & Momentos</a></li>
+					<li><a href="#" alt="" class="Invitation navSidebarCat">Invitations</a></li>
+					<li><a href="#" alt="" class="Jewelry navSidebarCat">Jewelry</a></li>
 				</ul>
-			<div class="price">
+			<!-- <div class="price">
 				<p class="priceLabel">price range:</p>
 				<form action="" class="priceRange">
 					<p>$</p><input type="number" id="minPrice" min="0">
@@ -112,7 +112,7 @@
 					<p>$</p><input type="number" id="maxPrice" min="0">
 					<input type="submit">
 				</form>
-			</div>
+			</div> -->
 		</div>
 
 		<aside>
@@ -130,17 +130,16 @@
 			</form>
 			<p>You are currently viewing listings for:</p>
 			<h2 class="currentlyViewing"></h2>
-			<p>Choose your category:</p>
+			<p>New category search:</p>
 			<ul>
-				<li><a class="underline" href="#" alt="" id="Accessories">Accessories</a></li>
-				<li><a class="underline" href="#" alt="" id="Clothing">Clothing</a></li>
-				<li><a class="underline" href="#" alt="" id="Decoration">Decorations</a></li>
-				<li><a class="underline" href="#" alt="" id="Gifts">Gift & Momentos</a></li>
-				<li><a class="underline" href="#" alt="" id="Invitation">Invitations</a></li>
-				<li><a class="underline" href="#" alt="" id="Jewelry">Jewellery</a></li>
+				<li><a class="Accessories underline sidebarCat" href="#" alt="">Accessories</a></li>
+				<li><a class="Clothing underline sidebarCat" href="#" alt="">Clothing</a></li>
+				<li><a class="Decorations underline sidebarCat" href="#" alt="">Decorations</a></li>
+				<li><a class="Gifts underline sidebarCat" href="#" alt="">Gift & Momentos</a></li>
+				<li><a class="Invitation underline sidebarCat" href="#" alt="">Invitations</a></li>
+				<li><a class="Jewelry underline sidebarCat" href="#" alt="">Jewelry</a></li>
 			</ul>
-
-			<div class="price">
+			<!-- <div class="price">
 				<p class="priceLabel">price range:</p>
 				<form action="" class="priceRange">
 					<p>$</p><input type="number" id="minPrice" min="0">
@@ -148,7 +147,7 @@
 					<p>$</p><input type="number" id="maxPrice" min="0">
 					<input type="submit">
 				</form>
-			</div>
+			</div> -->
 		</aside>
 
 		<div class="listingsContent">

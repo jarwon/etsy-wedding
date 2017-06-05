@@ -15,10 +15,8 @@ etsyApp.cat = "";
 //initializes app
 etsyApp.init = function() {
 	etsyApp.getLocation();
-	// etsyApp.getPriceRange();
 	etsyApp.changeLocation();
 };
-
 
 // Landing page: Get user's location either by device's navigator geolocation if access allowed OR from user's location text input if they deny access to navigator geolocation
 etsyApp.getLocation = function() {
@@ -51,7 +49,6 @@ etsyApp.getLocation = function() {
 	});
 };
 
-
 // Get user's location via navigator geolocation (longitude & latitude coordinates)
 etsyApp.userLocation = function(userPosition){
 	console.log(userPosition);
@@ -64,7 +61,6 @@ etsyApp.userLocation = function(userPosition){
 	$(".squareCategory").off("click");
   	etsyApp.catClickListener();
 };
-
 
 // Get user's location from text input field (city name - can be more specific if they wish, e.g. "Sydney, Australia"; just "Sydney" gives listings from Sydney, Nova Scotia)
 etsyApp.getUserInput = function() {
@@ -83,7 +79,7 @@ etsyApp.getUserInput = function() {
 	});
 };
 
-// user selects subcatagory, AJAX function is called to obtain results of selection
+// user selects subcatagory from gallery, AJAX function is called to obtain results of selection
 etsyApp.catClickListener = function() {
 	//bring user to category page on click
 	$(".squareCategory").on("click", function() {
@@ -96,6 +92,36 @@ etsyApp.catClickListener = function() {
 	});	
 }
 
+// user selects subcatagory from sidebar option, AJAX function
+etsyApp.sidebarCatListener = function() {
+	$(".sidebarCat").on("click", function() {
+		//on click of category, get id of category 
+		console.log("THIS", this, $(this))
+		// return class attribute (first word only - from index 0 to first space)
+		etsyApp.cat = $(this).attr("class").substr(0, $(this)[0].className.indexOf(" "));
+		// reset pg number to 1, location selection remains same
+		etsyApp.selectedPg = 1;
+			//clicked category
+			console.log('i was clicked', etsyApp.cat);
+		etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.selectedPg);
+	});	
+}
+
+// user selects subcatagory from unhidden nav sidebar option, AJAX function
+etsyApp.navSidebarCatListener = function() {
+	$(".navSidebarCat").on("click", function() {
+		//on click of category, get id of category 
+		console.log("THIS", this, $(this))
+		// return class attribute (first word only - from index 0 to first space)
+		etsyApp.cat = $(this).attr("class").substr(0, $(this)[0].className.indexOf(" "));
+		// reset pg number to 1, location selection remains same
+		etsyApp.selectedPg = 1;
+			//clicked category
+			console.log('i was clicked', etsyApp.cat);
+		etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.selectedPg);
+	
+	});	
+}
 
 // clear any existing related buttons, arrows and pgNum arrays
 var clearExisting = function () {
@@ -105,7 +131,6 @@ var clearExisting = function () {
 	etsyApp.showLHSarrow = false;
 	etsyApp.showRHSarrow = false;
 }
-
 
 // we display up to 5 page numbers at a time
 // check if number of pages is <5 and fill currentPgNums array
@@ -174,14 +199,11 @@ var genPgNumOptionsDisplay = function(currentNum, totPgs) {
 			etsyApp.showLHSarrow = true;
 		}
 	};
-
 	// console.log("about to call create Screen Buttons", etsyApp.currentPgNums);
 	// call create screen buttons with array as parameter
 	createScreenButtons(etsyApp.currentPgNums);
 }
 	
-
-
 // create buttons in DOM (incl event listeners) based on values in currentPgNums array
 var createScreenButtons = function(pgNumArray) {
 	// console.log("made into call create Screen Buttons", etsyApp.currentPgNums);
@@ -244,13 +266,12 @@ var createScreenButtons = function(pgNumArray) {
 	}
 }
 
-
 // Get local etsy listings based on the chosen category
 etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 	
 	// clear any existing categoryItems div
 	$(".categoryItems").empty();
-	// $(".eachItem").remove();
+	console.log('category', etsyApp.cat);
 
 		$.ajax({
 			url: "http://proxy.hackeryou.com",
@@ -274,6 +295,7 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 		}).then(function(listings){
 
 			etsyApp.subCategoryListings = listings.results;
+
 			for (let i = 0; i < etsyApp.subCategoryListings.length; i++) {
 				var itemListingID = etsyApp.subCategoryListings[i].listing_id;
 			
@@ -297,16 +319,30 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 						xmlToJSON: false
 					}
 				}).then(function(images){
-					console.log(images.results);
+	
 					var itemListingImage = images.results[0].url_fullxfull;
 					
-					
+					let catTitle = etsyApp.subCategoryListings[i].title;
+					console.log('cat title', catTitle);
+					console.log(catTitle.length);
+
+
+					if (catTitle.length > 100) {
+						catTitle = catTitle.substring(0,100).concat("...");
+					}
+
+					if (window.matchMedia('(max-width: 650px)').matches) {
+						if (catTitle.length > 50) {
+						catTitle = catTitle.substring(0,50).concat("...");
+					}
+					    }
+
 					console.log(images.results[0]);
 
 					$(".categoryItems").append(`
 						<div class="eachItem">
 							<a href="${etsyApp.subCategoryListings[i].url}"><img src="${itemListingImage}"></a>
-							<h4>${etsyApp.subCategoryListings[i].title}</h4>
+							<h4>${catTitle}</h4>
 							<p>$${etsyApp.subCategoryListings[i].price}</p>
 						</div>
 					`);
@@ -330,12 +366,6 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 		    	}
 		    });
 
-		    // var asideTop = $("aside").outerHeight();
-		    // var navTop = $(".nav").outerHeight();
-		    // console.log(`aside: ${asideTop}, nav: ${navTop}`);
-		    // var navHeight = asideTop - navTop;
-		    // console.log(`nav height: ${navHeight}`);
-
 		    // quantity of search results
 			var totNumOfHits = listings.count;
 			// number of search results per page
@@ -356,10 +386,23 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 			// call check page numbers function
 			chkPgNums(totNumOfPgs);
 
+				// set-up listeners for sidebar categories selectors, clear any existing
+				$(".sidebarCat").off("click"); 
+				$(".navSidebarCat").off("click"); 
+				etsyApp.sidebarCatListener();
+
+			if (window.matchMedia('(max-width: 768px)').matches) {
+
+			// 	// set-up listeners for unhidden nav sidebar categories selectors, clear any existing
+				$(".sidebarCat").off("click"); 
+				$(".navSidebarCat").off("click"); 
+				etsyApp.navSidebarCatListener();
+			}
+
+			// set-up listeners for user price range selection
 		    etsyApp.getPriceRange();
 		});
 }
-
 
 // Get values of user's price range to narrow down listings
 etsyApp.getPriceRange = function() {
@@ -371,7 +414,6 @@ etsyApp.getPriceRange = function() {
 		var priceMax = $("#maxPrice").val();
 		console.log(`min price: $${priceMin}, max price: $${priceMax}`);
 		$("input[type=number]").val("");
-		
 
 		let subCategoryListings = etsyApp.subCategoryListings;
 		var listingsInPriceRange = subCategoryListings.filter(function(listing) {
@@ -385,7 +427,7 @@ etsyApp.getPriceRange = function() {
 			console.log(listing);
 			$(".categoryItems").append(`
 				<div class="eachItem">
-					<a href="${listing.url}"><img src="http://via.placeholder.com/200x200"></a>
+					<a href="${listing.url}"><img src="${itemListingImage}"></a>
 					<h4>${listing.title}</h4>
 					<p>$${listing.price}</p>	
 				</div>
@@ -394,7 +436,6 @@ etsyApp.getPriceRange = function() {
 
 	});
 }
-
 
 // Change location sidebar form
 etsyApp.changeLocation = function() {
@@ -410,7 +451,6 @@ etsyApp.changeLocation = function() {
 		etsyApp.selectedPg = 1;
 		etsyApp.cat = "";
 
-
 	    // go to categories section and wait for user to select new category (call click listener)
 		$("section.categories").css("display", "block");
 		$('html, body').animate({
@@ -423,7 +463,6 @@ etsyApp.changeLocation = function() {
 
 	});
 }
-
 
 $(function() {
 	etsyApp.init();
