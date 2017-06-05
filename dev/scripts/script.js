@@ -59,7 +59,9 @@ etsyApp.userLocation = function(userPosition){
 	etsyApp.lon = userPosition.coords.longitude;
 	etsyApp.userInputLocation = null;
 	console.log(etsyApp.lat, etsyApp.lon);
-
+	
+	// remove any prior listening events
+	$(".squareCategory").off("click");
   	etsyApp.catClickListener();
 };
 
@@ -74,8 +76,10 @@ etsyApp.getUserInput = function() {
 		console.log(etsyApp.userInputLocation);
 		etsyApp.lat = undefined;
 		etsyApp.lon = undefined;
-
-	    etsyApp.catClickListener();
+		
+		// remove any prior listening events
+		$(".squareCategory").off("click");
+	  	etsyApp.catClickListener();
 	});
 };
 
@@ -83,12 +87,11 @@ etsyApp.getUserInput = function() {
 etsyApp.catClickListener = function() {
 	//bring user to category page on click
 	$(".squareCategory").on("click", function() {
-		//on click of category, get id of category and clear existing categoryItems div
-		$(".categoryItems").empty();
+		//on click of category, get id of category 
 		etsyApp.cat = $(this).attr("id");
 			//clicked category
 			console.log(etsyApp.cat);
-	etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.selectedPg);
+		etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.selectedPg);
 	
 	});	
 }
@@ -123,6 +126,7 @@ var chkPgNums = function(totPgs) {
 	}
 }
 
+// determine what buttons will be generated
 var genPgNumOptionsDisplay = function(currentNum, totPgs) {
 	// console.log('made it to gen pg num display options');
 	// if either of first three pages are selected
@@ -244,8 +248,9 @@ var createScreenButtons = function(pgNumArray) {
 // Get local etsy listings based on the chosen category
 etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 	
-	// remove any existing listings from html
-	$(".eachItem").remove();
+	// clear any existing categoryItems div
+	$(".categoryItems").empty();
+	// $(".eachItem").remove();
 
 		$.ajax({
 			url: "http://proxy.hackeryou.com",
@@ -267,7 +272,6 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 				xmlToJSON: false
 			}
 		}).then(function(listings){
-			console.log('listings 1', listings);
 
 			etsyApp.subCategoryListings = listings.results;
 			for (let i = 0; i < etsyApp.subCategoryListings.length; i++) {
@@ -312,48 +316,7 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 					`);
 						$(".currentlyViewing").text(etsyApp.cat);
 				});
-
-				console.log('listings', listings);
-				// console.log('total num of hits', listings.count);
-				// console.log('num hits per pg', listings.params.limit);
-				// quantity of search results
-				var totNumOfHits = listings.count;
-				// number of search results per page
-				var totNumOfHitsPerPg = listings.params.limit;
-				// if quantity of search results goes evenly into number of search results per pg
-				if (totNumOfHits % totNumOfHitsPerPg === 0) {
-					var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
-				}
-				// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
-				// use math.floor to avoid decimal place results/round up. 
-				else {
-					var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
-				}
-
-				// clear any existing related buttons, arrows and pgNum arrays
-				clearExisting();
-
-				// console.log("****", etsyApp.currentPgNums);
-				// call check page numbers function
-				// console.log('tot num of pgs to make', totNumOfPgs);
-				chkPgNums(totNumOfPgs);
-
-
-				$("section.listings").css("display", "block");
-				$('html, body').animate({
-			         scrollTop: $("#listings").offset().top
-			    }, 1000);
-		
-				// $("aside").css("position", "fixed");
-
 			}
-
-			// clear any existing related buttons, arrows and pgNum arrays
-			clearExisting();
-
-			// console.log("****", etsyApp.currentPgNums);
-			// call check page numbers function
-			chkPgNums(totNumOfPgs);
 
 			$("section.listings").css("display", "block");
 			$('html, body').animate({
@@ -384,6 +347,26 @@ etsyApp.getCategory = function(lat, lon, userInputLocation, currentPg) {
 				$(".listingsContent").css("background-color", "red");
 			};
 		  
+
+		    // quantity of search results
+			var totNumOfHits = listings.count;
+			// number of search results per page
+			var totNumOfHitsPerPg = listings.params.limit;
+			// if quantity of search results goes evenly into number of search results per pg
+			if (totNumOfHits % totNumOfHitsPerPg === 0) {
+				var totNumOfPgs = totNumOfHits / totNumOfHitsPerPg;
+			}
+			// if quantity of search results does not go evenly into number of search results per pg, add + extra pg to cover the remainder
+			// use math.floor to avoid decimal place results/round up. 
+			else {
+				var totNumOfPgs = Math.floor(totNumOfHits / totNumOfHitsPerPg) + 1;
+			}
+
+			// clear any existing related buttons, arrows and pgNum arrays
+			clearExisting();
+			
+			// call check page numbers function
+			chkPgNums(totNumOfPgs);
 
 		    etsyApp.getPriceRange();
 		});
@@ -430,22 +413,26 @@ etsyApp.changeLocation = function() {
 	$("#formSidebar").on("submit", function(e) {
 		e.preventDefault();
 
-
 		etsyApp.userInputLocation = $("#formSidebar input[id='locationNew']").val();
 		$("#formSidebar input[id='locationNew']").val("");
 		console.log(`new location: ${etsyApp.userInputLocation}`);
+		// reset defaults
 		etsyApp.lat = undefined;
 		etsyApp.lon = undefined;
+		etsyApp.selectedPg = 1;
+		etsyApp.cat = "";
 
-	    // $(".categoryItems").empty();
+
+	    // go to categories section and wait for user to select new category (call click listener)
 		$("section.categories").css("display", "block");
 		$('html, body').animate({
 	         scrollTop: $("#categories").offset().top
 	    }, 1000);
 
+		// remove any prior listening events
+		$(".squareCategory").off("click");
 	    etsyApp.catClickListener();
 
-		// etsyApp.getCategory(etsyApp.lat, etsyApp.lon, etsyApp.userInputLocation, etsyApp.selectedPg);
 	});
 }
 
